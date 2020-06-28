@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_todo"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="Todo"
+        android:icon="@drawable/ic_done_all"/>
+
+    <item
+        android:id="@+id/nav_backlog"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="Backlog"
+        android:icon="@drawable/ic_list"/>
+
+    <item
+        android:id="@+id/nav_stats"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="Stats"
+        android:icon="@drawable/ic_stats"/>
+
+    <item
+        android:id="@+id/nav_menu"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="Menu"
+        android:icon="@drawable/ic_menu_open"/>
+</menu>

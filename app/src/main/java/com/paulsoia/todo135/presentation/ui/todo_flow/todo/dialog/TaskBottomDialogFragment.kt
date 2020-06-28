@@ -1,0 +1,75 @@
+package com.paulsoia.todo135.presentation.ui.todo_flow.todo.dialog
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.task.Task
+import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
+import com.paulsoia.todo135.presentation.utils.onClick
+import kotlinx.android.synthetic.main.dialog_task.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.*
+
+class TaskBottomDialogFragment : BaseBottomSheetDialogFragment() {
+
+    private val taskViewModel: TaskViewModel by viewModel()
+
+    companion object {
+        fun newInstance() = TaskBottomDialogFragment()
+    }
+
+    override val resLayout = R.layout.dialog_task
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        etTask.requestFocus()
+        initLoader()
+        warning()
+        tvSave.onClick { saveTask() }
+    }
+
+    private fun saveTask() {
+        taskViewModel.trySaveTask(getTaskModel()).observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = sdf.format(System.currentTimeMillis())
+            getUpdateCallback()?.onUpdateTask(date)
+        })
+    }
+
+    private fun warning() {
+        taskViewModel.warningResult.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        })
+    }
+
+    private fun getTaskModel(): Task {
+        val task: Task
+        val message = etTask.text.toString()
+        val level = "big" //todo change to boolean
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val date = sdf.format(System.currentTimeMillis())
+        val category = ""
+        val tag = ""
+        task = Task(null, date, message, tag, category, level)
+        return task
+    }
+
+    private fun initLoader() {
+        taskViewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
+            loader.isVisible = it
+        })
+    }
+
+    private fun getUpdateCallback(): UpdateTaskScreenCallback? = targetFragment as? UpdateTaskScreenCallback
+
+    interface UpdateTaskScreenCallback {
+        fun onUpdateTask(date: String)
+    }
+
+}

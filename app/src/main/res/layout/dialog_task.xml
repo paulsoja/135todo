@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="4dp"
+    android:orientation="vertical"
+    android:padding="4dp">
+
+    <EditText
+        android:id="@+id/etTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="new task"
+        android:hint="@string/todo_new_task"
+        android:inputType="textLongMessage" />
+
+    <LinearLayout
+        android:id="@+id/llLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/etTask"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBig"
+            android:layout_width="0dp"
+            style="@style/CityInBubbleTextView"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@color/grey_light"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/text_big" />
+
+        <TextView
+            android:id="@+id/tvMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@color/grey_light"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/text_medium" />
+
+        <TextView
+            android:id="@+id/tvSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@color/grey_light"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/text_small" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSave"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/llLevel"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/text_save" />
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
