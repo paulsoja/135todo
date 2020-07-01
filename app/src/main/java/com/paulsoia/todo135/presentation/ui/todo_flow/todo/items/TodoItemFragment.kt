@@ -2,7 +2,8 @@ package com.paulsoia.todo135.presentation.ui.todo_flow.todo.items
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.paulsoia.todo135.presentation.base.BaseFragment
@@ -45,6 +46,7 @@ class TodoItemFragment : BaseFragment(), TaskBottomDialogFragment.UpdateTaskScre
             btnOne.setImageResource(R.drawable.ic_check)
         }
         getTaskList()
+        check()
     }
 
     override fun onUpdateTask(date: String) {
@@ -55,6 +57,30 @@ class TodoItemFragment : BaseFragment(), TaskBottomDialogFragment.UpdateTaskScre
         todoItemViewModel.result.observe(viewLifecycleOwner, Observer {
 
         })
+    }
+
+    private fun toggleEditText(editText: EditText, imageView: ImageView) {
+        imageView.onClick {
+            if (editText.isEnabled) {
+                editText.isEnabled = false
+                imageView.setImageResource(R.drawable.ic_edit)
+            } else {
+                editText.isEnabled = true
+                imageView.setImageResource(R.drawable.ic_check)
+            }
+        }
+    }
+
+    private fun check() {
+        toggleEditText(etOne, btnOne)
+        toggleEditText(etTwo, btnTwo)
+        toggleEditText(etThree, btnThree)
+        toggleEditText(etFour, btnFour)
+        toggleEditText(etFive, btnFive)
+        toggleEditText(etSix, btnSix)
+        toggleEditText(etSeven, btnSeven)
+        toggleEditText(etEight, btnEight)
+        toggleEditText(etNine, btnNine)
     }
 
 }

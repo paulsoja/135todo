@@ -33,6 +33,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etOne"
                     android:layout_width="0dp"
@@ -42,7 +47,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_big_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -71,6 +75,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etTwo"
                     android:layout_width="0dp"
@@ -80,7 +89,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_medium_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -101,6 +109,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etThree"
                     android:layout_width="0dp"
@@ -110,7 +123,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_medium_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -131,6 +143,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkFour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etFour"
                     android:layout_width="0dp"
@@ -140,7 +157,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_medium_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -169,6 +185,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkFive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etFive"
                     android:layout_width="0dp"
@@ -178,7 +199,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_small_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -199,6 +219,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkSix"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etSix"
                     android:layout_width="0dp"
@@ -208,7 +233,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_small_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -229,6 +253,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkSeven"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etSeven"
                     android:layout_width="0dp"
@@ -238,7 +267,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_small_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -259,6 +287,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkEight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etEight"
                     android:layout_width="0dp"
@@ -268,7 +301,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_small_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -289,6 +321,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkNine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/etNine"
                     android:layout_width="0dp"
@@ -298,7 +335,6 @@
                     android:enabled="false"
                     android:hint="@string/todo_small_hint"
                     android:inputType="textLongMessage"
-                    android:text="@string/todo_empty_text"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
