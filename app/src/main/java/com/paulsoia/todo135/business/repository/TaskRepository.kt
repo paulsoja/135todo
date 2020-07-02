@@ -10,6 +10,8 @@ interface TaskRepository {
 
     suspend fun removeTask(taskId: Long)
 
+    suspend fun getAllTasks(): Result<List<Task>>
+
     suspend fun getTasksByDate(date: String): Result<List<Task>>
 
 }

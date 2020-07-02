@@ -22,6 +22,16 @@ class TaskDataRepository(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getAllTasks(): Result<List<Task>> {
+        return try {
+            Result.success(taskDao.getAllTasks().map {
+                taskMapper.map(it)
+            })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun getTasksByDate(date: String): Result<List<Task>> {
         return try {
             Result.success(taskDao.getTasksByDate(date).map {

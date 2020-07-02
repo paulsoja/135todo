@@ -6,5 +6,6 @@ data class Task(
     val message: String,
     val tag: String,
     val category: String,
-    val level: String
+    val level: String,
+    var isComplete: Boolean = false
 )

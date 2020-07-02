@@ -1,5 +1,6 @@
 package com.paulsoia.todo135.presentation.di
 
+import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.BacklogViewModel
 import com.paulsoia.todo135.presentation.ui.todo_flow.todo.TodoViewModel
 import com.paulsoia.todo135.presentation.ui.todo_flow.todo.dialog.TaskViewModel
 import com.paulsoia.todo135.presentation.ui.todo_flow.todo.items.TodoItemViewModel
@@ -10,4 +11,5 @@ val viewModelModule = module {
     viewModel { TodoViewModel(get()) }
     viewModel { TaskViewModel(get()) }
     viewModel { TodoItemViewModel(get()) }
+    viewModel { BacklogViewModel(get()) }
 }
