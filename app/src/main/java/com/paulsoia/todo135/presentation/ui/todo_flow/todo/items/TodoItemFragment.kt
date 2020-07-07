@@ -9,12 +9,12 @@ import androidx.lifecycle.Observer
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
-import com.paulsoia.todo135.presentation.ui.todo_flow.todo.dialog.TaskBottomDialogFragment
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
 import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.item_days.*
 import org.koin.android.ext.android.inject
 
-class TodoItemFragment : BaseFragment(), TaskBottomDialogFragment.UpdateTaskScreenCallback {
+class TodoItemFragment : BaseFragment(), NewTaskDialog.UpdateTaskScreenCallback {
 
     companion object {
         private val ARGS = "args"
@@ -37,7 +37,7 @@ class TodoItemFragment : BaseFragment(), TaskBottomDialogFragment.UpdateTaskScre
         super.onViewCreated(view, savedInstanceState)
         count = arguments?.getInt(ARGS) as Int
         fabAdd.onClick {
-            TaskBottomDialogFragment.newInstance().apply {
+            NewTaskDialog.newInstance().apply {
                 setTargetFragment(this@TodoItemFragment, 0)
             }.show(parentFragmentManager, "tag")
         }

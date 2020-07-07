@@ -1,41 +1,44 @@
-package com.paulsoia.todo135.presentation.ui.todo_flow.todo.dialog
+package com.paulsoia.todo135.presentation.ui.backlog_flow.dialog
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.SaveTaskUseCase
+import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber
 
-class TaskViewModel(
-    private val saveTaskUseCase: SaveTaskUseCase
+class EditTaskViewModel(
+    private val updateTaskByIdUseCase: UpdateTaskByIdUseCase
 ) : ViewModel() {
+
+    internal val message = MutableLiveData<Task>()
 
     internal val isViewLoading = MutableLiveData<Boolean>()
     internal val warningResult = MutableLiveData<String>()
 
-    internal fun trySaveTask(task: Task): LiveData<Boolean> {
-        val saveTaskResult = MutableLiveData<Boolean>()
+    internal fun tryUpdateTask(task: Task): LiveData<Boolean> {
+        val updateTaskResult = MutableLiveData<Boolean>()
         when {
             task.message.isEmpty() -> {}
             task.level.isBlank() -> {}
             else -> {
                 isViewLoading.value = true
                 warningResult.value = ""
-                saveTaskUseCase(SaveTaskUseCase.Params(task)) {
+                updateTaskByIdUseCase(UpdateTaskByIdUseCase.Params(task)) {
                     it.onSuccess {
-                        saveTaskResult.value = true
+                        updateTaskResult.value = true
                     }.onFailure {
                         isViewLoading.value = false
                         warningResult.value = it.message
-                        saveTaskResult.value = false
+                        updateTaskResult.value = false
                         Timber.w("saveTaskUseCase: ${it.message}")
                     }
                     isViewLoading.value = false
                 }
             }
         }
-        return saveTaskResult
+        return updateTaskResult
     }
 
 }

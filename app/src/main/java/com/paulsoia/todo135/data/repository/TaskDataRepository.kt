@@ -15,7 +15,7 @@ class TaskDataRepository(
     }
 
     override suspend fun updateTask(task: Task) {
-        TODO("Not yet implemented")
+        taskDao.updateTask(taskMapper.reverse(task))
     }
 
     override suspend fun removeTask(taskId: Long) {

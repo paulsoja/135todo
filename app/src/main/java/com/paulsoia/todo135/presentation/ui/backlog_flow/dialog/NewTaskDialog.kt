@@ -1,4 +1,4 @@
-package com.paulsoia.todo135.presentation.ui.todo_flow.todo.dialog
+package com.paulsoia.todo135.presentation.ui.backlog_flow.dialog
 
 import android.os.Bundle
 import android.view.View
@@ -9,21 +9,20 @@ import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
 import com.paulsoia.todo135.presentation.utils.onClick
-import kotlinx.android.synthetic.main.dialog_task.*
+import kotlinx.android.synthetic.main.dialog_new_task.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TaskBottomDialogFragment : BaseBottomSheetDialogFragment() {
+class NewTaskDialog : BaseBottomSheetDialogFragment() {
 
-    private val taskViewModel: TaskViewModel by viewModel()
+    private val taskViewModel: NewTaskViewModel by viewModel()
 
     companion object {
-        fun newInstance() = TaskBottomDialogFragment()
+        fun newInstance() = NewTaskDialog()
     }
 
-    override val resLayout = R.layout.dialog_task
+    override val resLayout = R.layout.dialog_new_task
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
