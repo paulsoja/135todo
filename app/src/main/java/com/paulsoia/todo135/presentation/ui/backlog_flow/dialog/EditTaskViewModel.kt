@@ -3,7 +3,6 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.dialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.paulsoia.todo135.business.interactor.SaveTaskUseCase
 import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber

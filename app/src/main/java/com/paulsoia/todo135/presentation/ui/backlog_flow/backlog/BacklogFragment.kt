@@ -2,6 +2,8 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.backlog
 
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,13 +12,17 @@ import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.list.BacklogTaskAdapter
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.MenuDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
 import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_backlog.*
 import kotlinx.android.synthetic.main.item_days.fabAdd
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
-class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback {
+class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBacklogCallback {
 
     companion object {
         fun newInstance() = BacklogFragment()
@@ -24,6 +30,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback {
 
     private val backlogViewModel: BacklogViewModel by viewModel()
     private val adapter = BacklogTaskAdapter()
+    var data = listOf<Task>()
 
     override val layoutRes: Int = R.layout.fragment_backlog
 
@@ -32,6 +39,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback {
         adapter.callback = this
         backlogViewModel.getAllTasks()
         getTasks()
+        //updateAdapter()
         initRecyclerView()
         fabAdd.onClick {
             NewTaskDialog.newInstance().apply {
@@ -45,11 +53,32 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback {
         val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         rvTasks.addItemDecoration(divider)
         rvTasks.adapter = adapter
+
+        //todo for next release
+        /*val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), 0) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                val positionDragged = viewHolder.adapterPosition
+                val positionTarget = target.adapterPosition
+                Collections.swap(data, positionDragged, positionTarget)
+                adapter.notifyItemMoved(positionDragged, positionTarget)
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            }
+
+        })
+        helper.attachToRecyclerView(rvTasks)*/
     }
 
     private fun getTasks() {
         backlogViewModel.result.observe(viewLifecycleOwner, Observer {
-            adapter.swapData(it.sortedBy { it.isComplete })
+            adapter.swapData(it)
+            data = it
         })
     }
 
@@ -67,6 +96,35 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback {
         EditTaskDialog.newInstance(task, position).apply {
             setTargetFragment(this@BacklogFragment, 0)
         }.show(parentFragmentManager, "edit")
+    }
+
+    override fun onMenuClicked(task: Task, position: Int, v: View) {
+        val popup = PopupMenu(requireContext(), v)
+        popup.inflate(R.menu.popup_menu)
+        popup.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.menuCopy -> copyTask(task)
+                R.id.menuMove -> Toast.makeText(requireContext(), "menu2", Toast.LENGTH_SHORT).show()
+                R.id.menuDelete -> Toast.makeText(requireContext(), "menu3", Toast.LENGTH_SHORT).show()
+            }
+            return@setOnMenuItemClickListener true
+        }
+        popup.show()
+    }
+
+    private fun copyTask(task: Task) {
+        /*val date = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        date.add(Calendar.DATE, 0)
+        task.date = sdf.format(date.time)
+        backlogViewModel.updateTask(task)*/
+        MenuDialog.newInstance(task).apply {
+            setTargetFragment(this@BacklogFragment, 0)
+        }.show(parentFragmentManager, "new")
+    }
+
+    override fun onUpdateTask(date: String) {
+        backlogViewModel.getAllTasks()
     }
 
 }

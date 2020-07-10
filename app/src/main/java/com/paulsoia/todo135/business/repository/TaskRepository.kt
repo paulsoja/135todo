@@ -14,4 +14,6 @@ interface TaskRepository {
 
     suspend fun getTasksByDate(date: String): Result<List<Task>>
 
+    suspend fun getTasksWithDate(): Result<List<Task>>
+
 }

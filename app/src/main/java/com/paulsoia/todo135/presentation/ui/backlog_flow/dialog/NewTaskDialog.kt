@@ -35,9 +35,11 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     private fun saveTask() {
         taskViewModel.trySaveTask(getTaskModel()).observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
-            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val date = sdf.format(System.currentTimeMillis())
-            getUpdateCallback()?.onUpdateTask(date)
+            if (it) {
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val date = sdf.format(System.currentTimeMillis())
+                getUpdateCallback()?.onUpdateTask(date)
+            }
         })
     }
 
@@ -55,7 +57,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
         val date = sdf.format(System.currentTimeMillis())
         val category = ""
         val tag = ""
-        task = Task(null, date, message, tag, category, level)
+        task = Task(null, "", message, tag, category, level)
         return task
     }
 
@@ -65,10 +67,6 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
         })
     }
 
-    private fun getUpdateCallback(): UpdateTaskScreenCallback? = targetFragment as? UpdateTaskScreenCallback
-
-    interface UpdateTaskScreenCallback {
-        fun onUpdateTask(date: String)
-    }
+    private fun getUpdateCallback(): UpdateBacklogCallback? = targetFragment as? UpdateBacklogCallback
 
 }

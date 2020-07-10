@@ -45,10 +45,17 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
             val message = etMessage.text.toString()
             val task = editTaskViewModel.message.value
             task?.message = message
-            task?.let {
-                editTaskViewModel.tryUpdateTask(it)
+            task?.let { tsk ->
+                editTaskViewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, Observer {
+                    if (it) {
+                        getUpdateCallback()?.onUpdateTask(tsk.date)
+                    }
+                })
             }
-
         }
     }
+
+    private fun getUpdateCallback(): UpdateBacklogCallback? =
+        targetFragment as? UpdateBacklogCallback
+
 }

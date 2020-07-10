@@ -45,11 +45,11 @@ class AppFragment : BaseFragment() {
                         true
                     }
                     R.id.nav_stats -> {
-                        navigate().newRootScreen(Screens.TodoFlowScreen)
+                        navigate().newRootScreen(Screens.StatsFlowScreen)
                         true
                     }
                     R.id.nav_menu -> {
-                        navigate().newRootScreen(Screens.TodoFlowScreen)
+                        navigate().newRootScreen(Screens.SettingsFlowScreen)
                         true
                     }
                     else -> false

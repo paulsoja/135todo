@@ -9,7 +9,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { TodoViewModel(get()) }
+    viewModel { TodoViewModel(get(), get()) }
     viewModel { NewTaskViewModel(get()) }
     viewModel { TodoItemViewModel(get()) }
     viewModel { BacklogViewModel(get(), get()) }

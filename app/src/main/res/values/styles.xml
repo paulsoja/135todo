@@ -22,4 +22,10 @@
         <item name="android:background">@drawable/bg_rectangle_rounded_white</item>
     </style>
 
+    <style name="DividerCommon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/grey_light</item>
+    </style>
+
 </resources>

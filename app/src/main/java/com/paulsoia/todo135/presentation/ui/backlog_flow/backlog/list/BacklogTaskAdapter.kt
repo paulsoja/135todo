@@ -4,7 +4,6 @@ import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
@@ -45,6 +44,9 @@ class BacklogTaskAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 onClick {
                     callback?.onTaskClicked(model, position)
                 }
+                ivMore.onClick {
+                    callback?.onMenuClicked(model, position, it)
+                }
                 checkbox.onClick {
                     when(checkbox.isChecked) {
                         true -> {
@@ -65,6 +67,7 @@ class BacklogTaskAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface Callback {
         fun onCheckboxClicked(task: Task, position: Int)
         fun onTaskClicked(task: Task, position: Int)
+        fun onMenuClicked(task: Task, position: Int, v: View)
     }
 
 }
