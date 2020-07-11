@@ -9,6 +9,9 @@
             android:id="@+id/menuMove"
             android:title="Move" />
         <item
+            android:id="@+id/menuReset"
+            android:title="Reset"/>
+        <item
             android:id="@+id/menuDelete"
             android:title="Delete"/>
     </group>

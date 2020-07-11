@@ -19,7 +19,7 @@ class TaskDataRepository(
     }
 
     override suspend fun removeTask(taskId: Long) {
-        TODO("Not yet implemented")
+        taskDao.removeTask(taskId)
     }
 
     override suspend fun getAllTasks(): Result<List<Task>> {

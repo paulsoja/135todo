@@ -17,10 +17,7 @@ import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
 import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_backlog.*
-import kotlinx.android.synthetic.main.item_days.fabAdd
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBacklogCallback {
 
@@ -103,22 +100,23 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
         popup.inflate(R.menu.popup_menu)
         popup.setOnMenuItemClickListener {
             when(it.itemId) {
-                R.id.menuCopy -> copyTask(task)
-                R.id.menuMove -> Toast.makeText(requireContext(), "menu2", Toast.LENGTH_SHORT).show()
-                R.id.menuDelete -> Toast.makeText(requireContext(), "menu3", Toast.LENGTH_SHORT).show()
+                R.id.menuCopy -> menuTask(task, false)
+                R.id.menuMove -> menuTask(task, true)
+                R.id.menuReset -> Toast.makeText(requireContext(), "reset", Toast.LENGTH_SHORT).show()
+                R.id.menuDelete -> Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show()
             }
             return@setOnMenuItemClickListener true
         }
         popup.show()
     }
 
-    private fun copyTask(task: Task) {
+    private fun menuTask(task: Task, isMove: Boolean) {
         /*val date = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         date.add(Calendar.DATE, 0)
         task.date = sdf.format(date.time)
         backlogViewModel.updateTask(task)*/
-        MenuDialog.newInstance(task).apply {
+        MenuDialog.newInstance(task, isMove).apply {
             setTargetFragment(this@BacklogFragment, 0)
         }.show(parentFragmentManager, "new")
     }

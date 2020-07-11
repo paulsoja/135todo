@@ -9,4 +9,5 @@ val useCasesModule = module {
     factory { GetAllTasksUseCase(get()) }
     factory { UpdateTaskByIdUseCase(get()) }
     factory { GetTasksWithDateUseCase(get()) }
+    factory { DeleteTaskByIdUseCase(get()) }
 }

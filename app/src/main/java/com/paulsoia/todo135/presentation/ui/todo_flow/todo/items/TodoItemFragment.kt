@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
 import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.item_days.*
 import org.koin.android.ext.android.inject
@@ -37,11 +36,6 @@ class TodoItemFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         count = arguments?.getInt(ARGS) as Int
         items = arguments?.getParcelableArrayList<Task>(ITEMS) as ArrayList<Task>
-        fabAdd.onClick {
-            NewTaskDialog.newInstance().apply {
-                setTargetFragment(this@TodoItemFragment, 0)
-            }.show(parentFragmentManager, "tag")
-        }
         btnOne.onClick {
             etOne.isEnabled = true
             btnOne.setImageResource(R.drawable.ic_check)

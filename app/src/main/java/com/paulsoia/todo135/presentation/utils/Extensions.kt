@@ -3,6 +3,7 @@ package com.paulsoia.todo135.presentation.utils
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.paulsoia.todo135.App
+import com.paulsoia.todo135.business.model.base.TypeEnum
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppScreen
@@ -14,6 +15,13 @@ import ru.terrakok.cicerone.commands.Replace
 fun View.onClick(call: (v: View) -> Unit) {
     setOnClickListener {
         call.invoke(it)
+    }
+}
+
+inline fun <reified T : Enum<T>> getEnumTypeValue(type: String): T? {
+    val values = enumValues<T>()
+    return values.firstOrNull {
+        it is TypeEnum && (it as TypeEnum).type.equals(type, true)
     }
 }
 

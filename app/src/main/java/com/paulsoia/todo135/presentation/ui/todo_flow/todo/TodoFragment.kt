@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.toolbar_todo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class TodoFragment : BaseFragment() {
 
