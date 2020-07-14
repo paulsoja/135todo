@@ -14,7 +14,7 @@ class TodoItemViewModel(
     internal val warningResult = MutableLiveData<String>()
     internal val result = MutableLiveData<List<Task>>()
 
-    internal fun getTaskByDate(date: String): LiveData<List<Task>> {
+    /*internal fun getTaskByDate(date: String): LiveData<List<Task>> {
         getTaskByDateUseCase(GetTaskByDateUseCase.Params(date)) {
             isViewLoading.value = true
             it.onSuccess {
@@ -25,6 +25,6 @@ class TodoItemViewModel(
             isViewLoading.value = false
         }
         return result
-    }
+    }*/
 
 }

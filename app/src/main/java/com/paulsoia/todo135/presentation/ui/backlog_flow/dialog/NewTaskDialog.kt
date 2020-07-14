@@ -38,7 +38,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
             if (it) {
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val date = sdf.format(System.currentTimeMillis())
-                getUpdateCallback()?.onUpdateTask(date)
+                getUpdateCallback()?.onUpdateTask()
             }
         })
     }
@@ -52,7 +52,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     private fun getTaskModel(): Task {
         val task: Task
         val message = etTask.text.toString()
-        val level = "big" //todo change to boolean
+        val level = "" //todo change to boolean
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = sdf.format(System.currentTimeMillis())
         val category = ""

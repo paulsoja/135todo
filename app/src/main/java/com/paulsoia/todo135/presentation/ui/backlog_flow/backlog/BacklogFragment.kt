@@ -99,11 +99,13 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
         val popup = PopupMenu(requireContext(), v)
         popup.inflate(R.menu.popup_menu)
         popup.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.menuCopy -> menuTask(task, false)
                 R.id.menuMove -> menuTask(task, true)
-                R.id.menuReset -> Toast.makeText(requireContext(), "reset", Toast.LENGTH_SHORT).show()
-                R.id.menuDelete -> Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT).show()
+                R.id.menuReset -> Toast.makeText(requireContext(), "reset", Toast.LENGTH_SHORT)
+                    .show()
+                R.id.menuDelete -> Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT)
+                    .show()
             }
             return@setOnMenuItemClickListener true
         }
@@ -121,7 +123,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
         }.show(parentFragmentManager, "new")
     }
 
-    override fun onUpdateTask(date: String) {
+    override fun onUpdateTask() {
         backlogViewModel.getAllTasks()
     }
 

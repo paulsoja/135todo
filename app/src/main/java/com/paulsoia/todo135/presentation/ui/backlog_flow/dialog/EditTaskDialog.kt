@@ -48,7 +48,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
             task?.let { tsk ->
                 editTaskViewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, Observer {
                     if (it) {
-                        getUpdateCallback()?.onUpdateTask(tsk.date)
+                        getUpdateCallback()?.onUpdateTask()
                     }
                 })
             }

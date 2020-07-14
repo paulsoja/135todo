@@ -10,6 +10,6 @@ data class Task(
     var message: String,
     val tag: String,
     val category: String,
-    val level: String,
+    var level: String,
     var isComplete: Boolean = false
 ) : Parcelable

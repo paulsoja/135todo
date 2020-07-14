@@ -29,16 +29,19 @@ class TodoViewModel(
         }
     }
 
-    internal fun getTaskWithDate() {
+    internal fun getTaskWithDate(): MutableLiveData<List<Task>> {
+        val taskItems = MutableLiveData<List<Task>>()
         isViewLoading.value = true
         getTasksWithDateUseCase {
             it.onSuccess {
                 resultTasks.value = it
+                taskItems.value = it
             }.onFailure {
                 warningResult.value = it.message
             }
             isViewLoading.value = false
         }
+        return taskItems
     }
 
 }

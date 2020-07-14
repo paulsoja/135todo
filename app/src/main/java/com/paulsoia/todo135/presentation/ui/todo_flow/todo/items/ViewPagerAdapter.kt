@@ -22,7 +22,7 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
     }
 
     override fun getItem(position: Int): Fragment {
-        return TodoItemFragment.newInstance(position, items)
+        return TodoItemFragment.newInstance(position, getTasksByDate(position))
     }
 
     private fun getTasksByDate(position: Int): ArrayList<Task> {

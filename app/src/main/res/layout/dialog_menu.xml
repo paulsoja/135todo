@@ -1,42 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvYesterday"
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_default_ripple"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:padding="@dimen/default_margin"
-        android:text="@string/text_yesterday" />
+        android:text="choose date" />
 
-    <View style="@style/DividerCommon" />
+    <View style="@style/DividerTitle" />
 
-    <TextView
-        android:id="@+id/tvToday"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llDates"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_default_ripple"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:padding="@dimen/default_margin"
-        android:text="@string/text_today" />
+        android:orientation="vertical">
 
-    <View style="@style/DividerCommon" />
+        <TextView
+            android:id="@+id/tvYesterday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_ripple"
+            android:gravity="center"
+            android:padding="@dimen/default_margin"
+            android:text="@string/text_yesterday"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tvTomorrow"
+        <View style="@style/DividerCommon" />
+
+        <TextView
+            android:id="@+id/tvToday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_ripple"
+            android:gravity="center"
+            android:padding="@dimen/default_margin"
+            android:text="@string/text_today"
+            android:textSize="18sp" />
+
+        <View style="@style/DividerCommon" />
+
+        <TextView
+            android:id="@+id/tvTomorrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_ripple"
+            android:gravity="center"
+            android:padding="@dimen/default_margin"
+            android:text="@string/text_tomorrow"
+            android:textSize="18sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llLevels"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_default_ripple"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:padding="@dimen/default_margin"
-        android:text="@string/text_tomorrow" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_ripple"
+            android:gravity="center"
+            android:padding="@dimen/default_margin"
+            android:text="@string/text_big"
+            android:textSize="18sp" />
+
+        <View style="@style/DividerCommon" />
+
+        <TextView
+            android:id="@+id/tvMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_ripple"
+            android:gravity="center"
+            android:padding="@dimen/default_margin"
+            android:text="@string/text_medium"
+            android:textSize="18sp" />
+
+        <View style="@style/DividerCommon" />
+
+        <TextView
+            android:id="@+id/tvSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_default_ripple"
+            android:gravity="center"
+            android:padding="@dimen/default_margin"
+            android:text="@string/text_small"
+            android:textSize="18sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

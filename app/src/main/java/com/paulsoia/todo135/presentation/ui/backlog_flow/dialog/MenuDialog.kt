@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
@@ -36,6 +37,18 @@ class MenuDialog : BaseBottomSheetDialogFragment() {
             tvYesterday.onClick { setDateAndUpdate(tsk, -1) }
             tvToday.onClick { setDateAndUpdate(tsk, 0) }
             tvTomorrow.onClick { setDateAndUpdate(tsk, +1) }
+            tvBig.onClick {
+                tsk.level = "big"
+                menuViewModel.tryUpdateTask(tsk)
+            }
+            tvMedium.onClick {
+                tsk.level = "medium"
+                menuViewModel.tryUpdateTask(tsk)
+            }
+            tvSmall.onClick {
+                tsk.level = "small"
+                menuViewModel.tryUpdateTask(tsk)
+            }
         }
         closeDialog(isMove, task?.id)
     }
@@ -45,7 +58,9 @@ class MenuDialog : BaseBottomSheetDialogFragment() {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         date.add(Calendar.DATE, day)
         task.date = sdf.format(date.time)
-        menuViewModel.tryUpdateTask(task)
+        llDates.isVisible = false
+        llLevels.isVisible = true
+        //menuViewModel.tryUpdateTask(task)
     }
 
     private fun closeDialog(isMove: Boolean = false, taskId: Long?) {
@@ -58,8 +73,11 @@ class MenuDialog : BaseBottomSheetDialogFragment() {
                     })}
                 }
             }
+            getUpdateCallback()?.onUpdateTask()
             dismiss()
         })
     }
+
+    private fun getUpdateCallback(): UpdateBacklogCallback? = targetFragment as? UpdateBacklogCallback
 
 }

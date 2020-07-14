@@ -29,10 +29,11 @@ class TodoFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTabs()
         initLoader()
-        todoViewModel.getTaskWithDate()
-        getTasks()
+        todoViewModel.getTaskWithDate().observe(viewLifecycleOwner, Observer {
+            //setupTabs()
+            getTasks()
+        })
         tvToday.text = getDate(1, true)
     }
 
@@ -56,24 +57,24 @@ class TodoFragment : BaseFragment() {
             ViewPagerAdapter(
                 childFragmentManager, requireContext()
             )
+        viewpageradapter.swapData(items)
         viewPager.adapter = viewpageradapter
         tabs.setupWithViewPager(viewPager)
         viewPager.currentItem = 1 //today tab
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                viewpageradapter.notifyDataSetChanged()
-            }
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tvToday.text = getDate(tab?.position ?: 100, true)
             }
         })
+
     }
 
     private fun getTasks() {
         todoViewModel.resultTasks.observe(viewLifecycleOwner, Observer {
             items = it
-            viewpageradapter.swapData(items)
+            setupTabs()
         })
     }
 

@@ -28,14 +28,13 @@ class TodoItemFragment : BaseFragment() {
     private val todoItemViewModel: TodoItemViewModel by inject()
 
     private var count: Int = 111
-    private var items = arrayListOf<Task>()
 
     override val layoutRes: Int = R.layout.item_days
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         count = arguments?.getInt(ARGS) as Int
-        items = arguments?.getParcelableArrayList<Task>(ITEMS) as ArrayList<Task>
+        todoItemViewModel.result.value = arguments?.getParcelableArrayList<Task>(ITEMS) as ArrayList<Task>
         btnOne.onClick {
             etOne.isEnabled = true
             btnOne.setImageResource(R.drawable.ic_check)
@@ -46,16 +45,27 @@ class TodoItemFragment : BaseFragment() {
 
     private fun getTaskList() {
         todoItemViewModel.result.observe(viewLifecycleOwner, Observer {
-
+            it.find { it.level == "big" }?.let {
+                etOne.setText(it.message)
+            }
+            it.filter { it.level == "medium" }.apply {
+                val etList = mutableListOf(etTwo, etThree, etFour)
+                val result = etList.take(size)
+                result.forEachIndexed { index, editText ->
+                    editText.setText(this[index].message)
+                }
+            }
+            it.filter { it.level == "small" }.apply {
+                val etList = mutableListOf(etFive, etSix, etSeven, etEight, etNine)
+                val result = etList.take(size)
+                result.forEachIndexed { index, editText ->
+                    editText.setText(this[index].message)
+                }
+            }
         })
     }
 
-    private fun initViews() {
-
-    }
-
     private fun toggleEditText(editText: EditText, imageView: ImageView, position: Int) {
-        //editText.setText(items[position].message)
         imageView.onClick {
             if (editText.isEnabled) {
                 editText.isEnabled = false

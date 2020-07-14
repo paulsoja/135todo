@@ -18,7 +18,6 @@ class NewTaskViewModel(
         val saveTaskResult = MutableLiveData<Boolean>()
         when {
             task.message.isEmpty() -> {}
-            task.level.isBlank() -> {}
             else -> {
                 isViewLoading.value = true
                 warningResult.value = ""
