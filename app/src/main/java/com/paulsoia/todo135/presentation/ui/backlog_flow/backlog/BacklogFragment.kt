@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
-import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.list.BacklogTaskAdapter
+import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogTaskAdapter
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.MenuDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
 import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_backlog.*
+import kotlinx.android.synthetic.main.toolbar_backlog.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBacklogCallback {
+class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateBacklogCallback {
 
     companion object {
         fun newInstance() = BacklogFragment()
@@ -27,7 +28,6 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
 
     private val backlogViewModel: BacklogViewModel by viewModel()
     private val adapter = BacklogTaskAdapter()
-    var data = listOf<Task>()
 
     override val layoutRes: Int = R.layout.fragment_backlog
 
@@ -36,8 +36,10 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
         adapter.callback = this
         backlogViewModel.getAllTasks()
         getTasks()
-        //updateAdapter()
+        updateTasks()
         initRecyclerView()
+        ivSort.onClick { Toast.makeText(requireContext(), "sort", Toast.LENGTH_SHORT).show() }
+        ivFilter.onClick { Toast.makeText(requireContext(), "filter", Toast.LENGTH_SHORT).show() }
         fabAdd.onClick {
             NewTaskDialog.newInstance().apply {
                 setTargetFragment(this@BacklogFragment, 0)
@@ -75,13 +77,12 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
     private fun getTasks() {
         backlogViewModel.result.observe(viewLifecycleOwner, Observer {
             adapter.swapData(it)
-            data = it
         })
     }
 
-    private fun updateAdapter() {
+    private fun updateTasks() {
         backlogViewModel.resultUpdate.observe(viewLifecycleOwner, Observer {
-            adapter.notifyDataSetChanged()
+            if (it) backlogViewModel.getAllTasks()
         })
     }
 
@@ -102,14 +103,26 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.Callback, UpdateBackl
             when (it.itemId) {
                 R.id.menuCopy -> menuTask(task, false)
                 R.id.menuMove -> menuTask(task, true)
-                R.id.menuReset -> Toast.makeText(requireContext(), "reset", Toast.LENGTH_SHORT)
-                    .show()
-                R.id.menuDelete -> Toast.makeText(requireContext(), "delete", Toast.LENGTH_SHORT)
-                    .show()
+                R.id.menuReset -> resetTask(task)
+                R.id.menuDelete -> deleteTask(task)
             }
             return@setOnMenuItemClickListener true
         }
         popup.show()
+    }
+
+    private fun resetTask(task: Task) {
+        val result = task
+        result.isComplete = false
+        result.date = ""
+        result.level = ""
+        backlogViewModel.updateTask(result)
+        updateTasks()
+    }
+
+    private fun deleteTask(task: Task) {
+        backlogViewModel.deleteTask((task))
+        updateTasks()
     }
 
     private fun menuTask(task: Task, isMove: Boolean) {

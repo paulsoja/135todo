@@ -12,4 +12,26 @@ data class Task(
     val category: String,
     var level: String,
     var isComplete: Boolean = false
-) : Parcelable
+) : Parcelable, TaskMarker {
+
+    companion object {
+        fun empty(
+            id: Long? = null,
+            date: String = "",
+            message: String = "",
+            tag: String = "",
+            category: String = "",
+            level: String = "",
+            isComplete: Boolean = false
+        ) = Task(
+            id = id,
+            date = date,
+            message = message,
+            tag = tag,
+            category = category,
+            level = level,
+            isComplete = isComplete
+        )
+    }
+
+}

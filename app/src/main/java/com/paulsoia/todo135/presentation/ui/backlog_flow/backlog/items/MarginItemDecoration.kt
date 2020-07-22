@@ -1,4 +1,4 @@
-package com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.list
+package com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items
 
 import android.graphics.Rect
 import android.view.View

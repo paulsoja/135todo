@@ -11,5 +11,6 @@ data class TaskEntity(
     var message: String,
     var tag: String,
     var category: String,
-    var level: String
+    var level: String,
+    var isComplete: Boolean
 )

@@ -1,6 +1,9 @@
 package com.paulsoia.todo135.presentation.utils
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.paulsoia.todo135.App
 import com.paulsoia.todo135.business.model.base.TypeEnum
@@ -44,3 +47,6 @@ fun Navigator.setLaunchScreen(vararg screen: SupportAppScreen) { // can we use `
 fun navigate(): Router {
     return App.instance.router
 }
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)

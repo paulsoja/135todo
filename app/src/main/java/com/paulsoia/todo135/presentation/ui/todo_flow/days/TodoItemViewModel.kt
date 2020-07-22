@@ -1,6 +1,5 @@
-package com.paulsoia.todo135.presentation.ui.todo_flow.todo.items
+package com.paulsoia.todo135.presentation.ui.todo_flow.days
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.GetTaskByDateUseCase

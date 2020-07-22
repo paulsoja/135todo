@@ -2,12 +2,14 @@ package com.paulsoia.todo135.presentation.ui.todo_flow.todo
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
-import com.paulsoia.todo135.presentation.ui.todo_flow.todo.items.ViewPagerAdapter
+import com.paulsoia.todo135.presentation.ui.todo_flow.days.ViewPagerAdapter
+import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_todo.*
 import kotlinx.android.synthetic.main.toolbar_todo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,7 +26,7 @@ class TodoFragment : BaseFragment() {
 
     override val layoutRes: Int = R.layout.fragment_todo
 
-    internal lateinit var viewpageradapter: ViewPagerAdapter
+    private lateinit var viewpageradapter: ViewPagerAdapter
     private var items = listOf<Task>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +36,7 @@ class TodoFragment : BaseFragment() {
             //setupTabs()
             getTasks()
         })
+        ivSwap.onClick { Toast.makeText(requireContext(), "swap", Toast.LENGTH_SHORT).show() }
         tvToday.text = getDate(1, true)
     }
 
@@ -53,10 +56,7 @@ class TodoFragment : BaseFragment() {
     }
 
     private fun setupTabs() {
-        viewpageradapter =
-            ViewPagerAdapter(
-                childFragmentManager, requireContext()
-            )
+        viewpageradapter = ViewPagerAdapter(childFragmentManager, requireContext())
         viewpageradapter.swapData(items)
         viewPager.adapter = viewpageradapter
         tabs.setupWithViewPager(viewPager)
