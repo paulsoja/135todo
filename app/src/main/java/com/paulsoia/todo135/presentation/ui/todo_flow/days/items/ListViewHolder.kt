@@ -1,8 +1,10 @@
 package com.paulsoia.todo135.presentation.ui.todo_flow.days.items
 
 import android.graphics.Paint
+import android.view.MotionEvent
 import android.view.View
 import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.RecyclerView
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseViewHolder
 import com.paulsoia.todo135.presentation.utils.onClick
@@ -15,6 +17,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
 
     companion object {
         var callback: ((task: Task) -> Unit)? = null
+        var callbackDrag: ((viewHolder: RecyclerView.ViewHolder) -> Unit)? = null
     }
 
     override fun bind(item: Task) {
@@ -36,21 +39,21 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
                     })
                 }
             }
+
             var oldText = ""
             etTask.doOnTextChanged { text, start, before, count ->
                 val newText = text.toString().trim()
-                //if (newText == oldText)
-                    oldText = newText
+                oldText = newText
                 GlobalScope.launch {
                     delay(1000)  //debounce timeOut
-                    if (newText != oldText && item.id != null)
-                        return@launch
-                    callback?.invoke(item.also {
-                        //it.isComplete = checkbox.isChecked
-                        it.message = newText
-                        //etTask.paintFlags = if (it.isComplete) Paint.STRIKE_THRU_TEXT_FLAG else 0
-                    })
+                    if (newText != oldText && item.id != null) return@launch
+                    callback?.invoke(item.also { it.message = newText })
                 }
+            }
+
+            ivDrag.setOnTouchListener { v, event ->
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) { callbackDrag?.invoke(ListViewHolder(itemView)) }
+                return@setOnTouchListener true
             }
         }
     }

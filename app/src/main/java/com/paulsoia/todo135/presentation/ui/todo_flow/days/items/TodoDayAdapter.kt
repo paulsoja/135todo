@@ -8,6 +8,7 @@ import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.business.model.task.Title
 import com.paulsoia.todo135.presentation.base.BaseViewHolder
 import com.paulsoia.todo135.presentation.utils.inflate
+import java.util.*
 
 class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
@@ -22,6 +23,7 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     set(value) {
         field = value
         listViewHolder.callback = { task -> callback?.onCheckboxClick(task) }
+        listViewHolder.callbackDrag = { vh -> callback?.onDragItem(vh) }
     }
 
     fun swapData(list: List<TaskMarker>) {
@@ -30,9 +32,9 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
         notifyDataSetChanged()
     }
 
-    fun updateTitleByPosition(position: Int, title: Title) {
-        items.mapIndexed { index, taskMarker ->
-
+    fun moveItem(from: Int, to: Int) {
+        if (from > 0 && from < items.size && to > 0 && to < items.size) {
+            Collections.swap(items, from, to)
         }
     }
 
@@ -65,6 +67,7 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface TaskListener {
         fun onCheckboxClick(task: Task)
+        fun onDragItem(viewHolder: RecyclerView.ViewHolder)
     }
 
 }
