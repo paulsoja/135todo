@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
+import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogItemsViewHolder
 import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogTaskAdapter
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.MenuDialog
@@ -39,7 +40,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         updateTasks()
         initRecyclerView()
         ivSort.onClick { Toast.makeText(requireContext(), "sort", Toast.LENGTH_SHORT).show() }
-        ivFilter.onClick { Toast.makeText(requireContext(), "filter", Toast.LENGTH_SHORT).show() }
+        ivFilter.onClick { filterMenu(it) }
         fabAdd.onClick {
             NewTaskDialog.newInstance().apply {
                 setTargetFragment(this@BacklogFragment, 0)
@@ -111,12 +112,38 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         popup.show()
     }
 
+    private fun filterMenu(v: View) {
+        PopupMenu(requireContext(), v).apply {
+            inflate(R.menu.filter_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.itemTag -> filterByValue("tag")
+                    R.id.itemDate -> filterByValue("date")
+                    R.id.itemAll -> filterByValue("all")
+                }
+                return@setOnMenuItemClickListener true
+            }
+        }.show()
+    }
+
+    private fun filterByValue(value: String) {
+        backlogViewModel.result.observe(viewLifecycleOwner, Observer {
+            val result = it.filter {
+                when(value) {
+                    "tag" -> (it as? Task)?.tag != ""
+                    "date" -> (it as? Task)?.date != ""
+                    else -> (it as? Task)?.message != ""
+                }
+            }
+            adapter.swapData(result)
+        })
+    }
+
     private fun resetTask(task: Task) {
-        val result = task
-        result.isComplete = false
-        result.date = ""
-        result.level = ""
-        backlogViewModel.updateTask(result)
+        task.isComplete = false
+        task.date = ""
+        task.level = ""
+        backlogViewModel.updateTask(task)
         updateTasks()
     }
 

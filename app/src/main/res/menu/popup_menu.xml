@@ -3,7 +3,6 @@
     <group android:id="@+id/menuPopup">
         <item
             android:id="@+id/menuCopy"
-            android:icon="@mipmap/ic_launcher"
             android:title="Copy" />
         <item
             android:id="@+id/menuMove"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/menuFilter">
+        <item
+            android:id="@+id/itemTag"
+            android:title="Tag" />
+        <item
+            android:id="@+id/itemDate"
+            android:title="Date" />
+        <item
+            android:id="@+id/itemAll"
+            android:title="All"/>
+    </group>
+</menu>
