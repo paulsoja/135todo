@@ -3,12 +3,12 @@
     <group android:id="@+id/menuFilter">
         <item
             android:id="@+id/itemTag"
-            android:title="Tag" />
+            android:title="@string/backlog_filter_tag" />
         <item
             android:id="@+id/itemDate"
-            android:title="Date" />
+            android:title="@string/backlog_filter_date" />
         <item
             android:id="@+id/itemAll"
-            android:title="All"/>
+            android:title="@string/backlog_filter_all"/>
     </group>
 </menu>

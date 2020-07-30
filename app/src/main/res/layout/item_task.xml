@@ -26,7 +26,7 @@
         android:paddingTop="@dimen/default_small_margin"
         android:paddingBottom="@dimen/default_small_margin"
         app:layout_constraintStart_toEndOf="@+id/checkbox"
-        android:text="Long long message" />
+        tools:text="Long long message" />
 
     <TextView
         android:id="@+id/tvTag"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:layout_constraintStart_toStartOf="@+id/tvTitle"
-        android:text="tag" />
+        tools:text="tag" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -43,7 +43,7 @@
         android:layout_marginStart="@dimen/default_half_margin"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         app:layout_constraintStart_toEndOf="@+id/tvTag"
-        android:text="01.07.2020" />
+        tools:text="01.07.2020" />
 
     <ImageView
         android:id="@+id/ivMore"

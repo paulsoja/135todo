@@ -9,11 +9,13 @@ import com.paulsoia.todo135.business.interactor.GetAllTasksUseCase
 import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
+import com.paulsoia.todo135.business.repository.PrefRepository
 
 class BacklogViewModel(
     private val getAllTasks: GetAllFilterTasksUseCase,
     private val updateTaskByIdUseCase: UpdateTaskByIdUseCase,
-    private val deleteTaskByIdUseCase: DeleteTaskByIdUseCase
+    private val deleteTaskByIdUseCase: DeleteTaskByIdUseCase,
+    private val prefRepository: PrefRepository
 ) : ViewModel() {
 
     internal val isViewLoading = MutableLiveData<Boolean>()
@@ -57,5 +59,9 @@ class BacklogViewModel(
             }
         }
     }
+
+    internal fun saveFilterType(type: String) = prefRepository.setHowToFilterTask(type)
+
+    internal fun getFilterType() = prefRepository.getHowToFilterTask() ?: "all"
 
 }

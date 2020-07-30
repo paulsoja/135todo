@@ -39,7 +39,8 @@ class App : Application() {
                 appModule,
                 repositoriesModule,
                 mapperModule,
-                useCasesModule
+                useCasesModule,
+                sharedPreferencesModule, preferencesRepositoryModule
             )
         )
 

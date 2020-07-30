@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:drawablePadding="16dp"
-        android:text="All tasks" />
+        android:text="@string/backlog_all_task" />
 
     <ImageView
         android:id="@+id/ivSort"

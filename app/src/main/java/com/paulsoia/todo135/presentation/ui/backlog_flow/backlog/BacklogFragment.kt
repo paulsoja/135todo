@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
-import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogItemsViewHolder
 import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogTaskAdapter
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.MenuDialog
@@ -27,7 +26,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         fun newInstance() = BacklogFragment()
     }
 
-    private val backlogViewModel: BacklogViewModel by viewModel()
+    private val viewModel: BacklogViewModel by viewModel()
     private val adapter = BacklogTaskAdapter()
 
     override val layoutRes: Int = R.layout.fragment_backlog
@@ -35,7 +34,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter.callback = this
-        backlogViewModel.getAllTasks()
+        viewModel.getAllTasks()
         getTasks()
         updateTasks()
         initRecyclerView()
@@ -76,19 +75,26 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     private fun getTasks() {
-        backlogViewModel.result.observe(viewLifecycleOwner, Observer {
-            adapter.swapData(it)
+        viewModel.result.observe(viewLifecycleOwner, Observer {
+            val result = it.filter {
+                when (viewModel.getFilterType()) {
+                    "tag" -> (it as? Task)?.tag != ""
+                    "date" -> (it as? Task)?.date != ""
+                    else -> (it as? Task)?.message != ""
+                }
+            }
+            adapter.swapData(result)
         })
     }
 
     private fun updateTasks() {
-        backlogViewModel.resultUpdate.observe(viewLifecycleOwner, Observer {
-            if (it) backlogViewModel.getAllTasks()
+        viewModel.resultUpdate.observe(viewLifecycleOwner, Observer {
+            if (it) viewModel.getAllTasks()
         })
     }
 
     override fun onCheckboxClicked(task: Task, position: Int) {
-        backlogViewModel.updateTask(task)
+        viewModel.updateTask(task)
     }
 
     override fun onTaskClicked(task: Task, position: Int) {
@@ -127,7 +133,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     private fun filterByValue(value: String) {
-        backlogViewModel.result.observe(viewLifecycleOwner, Observer {
+        viewModel.result.observe(viewLifecycleOwner, Observer {
             val result = it.filter {
                 when(value) {
                     "tag" -> (it as? Task)?.tag != ""
@@ -135,6 +141,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
                     else -> (it as? Task)?.message != ""
                 }
             }
+            viewModel.saveFilterType(value)
             adapter.swapData(result)
         })
     }
@@ -143,12 +150,12 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         task.isComplete = false
         task.date = ""
         task.level = ""
-        backlogViewModel.updateTask(task)
+        viewModel.updateTask(task)
         updateTasks()
     }
 
     private fun deleteTask(task: Task) {
-        backlogViewModel.deleteTask((task))
+        viewModel.deleteTask((task))
         updateTasks()
     }
 
@@ -164,7 +171,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     override fun onUpdateTask() {
-        backlogViewModel.getAllTasks()
+        viewModel.getAllTasks()
     }
 
 }

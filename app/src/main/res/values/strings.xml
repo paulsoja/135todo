@@ -20,4 +20,15 @@
     <string name="todo_medium_hint">medium</string>
     <string name="todo_small_hint">small</string>
     <string name="todo_empty_text">empty</string>
+
+    <!--backlog-->
+    <string name="backlog_filter_all">All</string>
+    <string name="backlog_filter_tag">Tag</string>
+    <string name="backlog_filter_date">Date</string>
+    <string name="dialog_edit_task">Edit task</string>
+    <string name="dialog_delete_task">Delete task</string>
+    <string name="dialog_done_task">Mark as done</string>
+    <string name="backlog_all_task">All tasks</string>
+
+    <string name="stat_title">Statistics</string>
 </resources>

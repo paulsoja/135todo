@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:drawablePadding="16dp"
-        android:text="Statistics" />
+        android:text="@string/stat_title" />
 
     <View
         android:layout_width="match_parent"

@@ -15,7 +15,7 @@
     <Button
         android:id="@+id/btnEdit"
         android:layout_width="match_parent"
-        android:text="Edit task"
+        android:text="@string/dialog_edit_task"
         app:layout_constraintTop_toBottomOf="@+id/etMessage"
         android:layout_height="wrap_content" />
 
@@ -29,14 +29,14 @@
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="0dp"
-            android:text="Delete task"
+            android:text="@string/dialog_delete_task"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <Button
             android:id="@+id/btnComplete"
             android:layout_width="0dp"
-            android:text="Mark as done"
+            android:text="@string/dialog_done_task"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
