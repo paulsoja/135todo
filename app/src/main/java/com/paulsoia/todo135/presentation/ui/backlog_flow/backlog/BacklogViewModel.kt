@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.DeleteTaskByIdUseCase
 import com.paulsoia.todo135.business.interactor.GetAllFilterTasksUseCase
-import com.paulsoia.todo135.business.interactor.GetAllTasksUseCase
 import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker

@@ -6,6 +6,8 @@
     <string name="text_medium">Medium</string>
     <string name="text_small">Small</string>
     <string name="text_save">Save</string>
+    <string name="text_ok">OK</string>
+    <string name="text_cancel">Cancel</string>
 
     <string name="text_yesterday">Yesterday</string>
     <string name="text_today">Today</string>
@@ -29,6 +31,10 @@
     <string name="dialog_delete_task">Delete task</string>
     <string name="dialog_done_task">Mark as done</string>
     <string name="backlog_all_task">All tasks</string>
+    <string name="backlog_add_tag">Add tag&#8230;</string>
+    <string name="backlog_choose_tag_title">Choose tag</string>
+    <string name="backlog_add_tag_hint">Add new tag</string>
 
+    <!--stats-->
     <string name="stat_title">Statistics</string>
 </resources>

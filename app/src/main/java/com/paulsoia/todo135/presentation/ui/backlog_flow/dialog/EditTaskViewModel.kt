@@ -28,10 +28,9 @@ class EditTaskViewModel(
                     it.onSuccess {
                         updateTaskResult.value = true
                     }.onFailure {
-                        isViewLoading.value = false
                         warningResult.value = it.message
                         updateTaskResult.value = false
-                        Timber.w("saveTaskUseCase: ${it.message}")
+                        Timber.w("updateTaskByIdUseCase: ${it.message}")
                     }
                     isViewLoading.value = false
                 }

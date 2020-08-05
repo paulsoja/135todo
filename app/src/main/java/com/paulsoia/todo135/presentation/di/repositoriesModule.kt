@@ -5,5 +5,5 @@ import com.paulsoia.todo135.data.repository.TaskDataRepository
 import org.koin.dsl.module
 
 val repositoriesModule = module {
-    factory<TaskRepository> { TaskDataRepository(get(), get()) }
+    factory<TaskRepository> { TaskDataRepository(get(), get(), get(), get()) }
 }

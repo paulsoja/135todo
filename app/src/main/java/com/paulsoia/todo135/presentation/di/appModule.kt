@@ -8,4 +8,5 @@ val appModule = module {
     single { Room.databaseBuilder(get(), AppDatabase::class.java, "todo135_db").build() }
 
     single { get<AppDatabase>().getTasksDao() }
+    single { get<AppDatabase>().getTagsDao() }
 }

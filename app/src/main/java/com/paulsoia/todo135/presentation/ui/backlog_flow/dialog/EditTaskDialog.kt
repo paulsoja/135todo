@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditTaskDialog : BaseBottomSheetDialogFragment() {
 
-    private val editTaskViewModel: EditTaskViewModel by viewModel()
+    private val viewModel: EditTaskViewModel by viewModel()
 
     companion object {
         private const val TASK_ARG = "task"
@@ -30,7 +30,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         etMessage.requestFocus()
         arguments?.let {
-            editTaskViewModel.message.value = it.takeIf { it.containsKey(TASK_ARG) }
+            viewModel.message.value = it.takeIf { it.containsKey(TASK_ARG) }
                 ?.getParcelable(TASK_ARG)
                 ?: throw IllegalArgumentException("`${Task::class.java.simpleName}` required")
         }
@@ -38,15 +38,15 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
     }
 
     private fun initViews() {
-        editTaskViewModel.message.observe(viewLifecycleOwner, Observer {
+        viewModel.message.observe(viewLifecycleOwner, Observer {
             etMessage.setText(it.message)
         })
         btnEdit.onClick {
             val message = etMessage.text.toString()
-            val task = editTaskViewModel.message.value
+            val task = viewModel.message.value
             task?.message = message
             task?.let { tsk ->
-                editTaskViewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, Observer {
+                viewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, Observer {
                     if (it) {
                         getUpdateCallback()?.onUpdateTask()
                     }

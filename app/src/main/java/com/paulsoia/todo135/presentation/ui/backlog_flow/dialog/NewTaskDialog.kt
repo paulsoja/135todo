@@ -16,7 +16,7 @@ import java.util.*
 
 class NewTaskDialog : BaseBottomSheetDialogFragment() {
 
-    private val taskViewModel: NewTaskViewModel by viewModel()
+    private val viewModel: NewTaskViewModel by viewModel()
 
     companion object {
         fun newInstance() = NewTaskDialog()
@@ -33,7 +33,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     }
 
     private fun saveTask() {
-        taskViewModel.trySaveTask(getTaskModel()).observe(viewLifecycleOwner, Observer {
+        viewModel.trySaveTask(getTaskModel()).observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             if (it) {
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -44,7 +44,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     }
 
     private fun warning() {
-        taskViewModel.warningResult.observe(viewLifecycleOwner, Observer {
+        viewModel.warningResult.observe(viewLifecycleOwner, Observer {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
     }
@@ -62,7 +62,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     }
 
     private fun initLoader() {
-        taskViewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
+        viewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
             loader.isVisible = it
         })
     }

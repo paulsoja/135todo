@@ -8,7 +8,7 @@ data class Task(
     val id: Long?,
     var date: String,
     var message: String,
-    val tag: String,
+    var tag: String,
     val category: String,
     var level: String,
     var isComplete: Boolean = false

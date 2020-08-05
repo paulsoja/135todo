@@ -2,6 +2,7 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items
 
 import android.graphics.Paint
 import android.view.View
+import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseViewHolder
 import com.paulsoia.todo135.presentation.utils.onClick
@@ -13,6 +14,7 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
         var callbackTask: ((task: Task, position: Int) -> Unit)? = null
         var callbackMenu: ((task: Task, position: Int, v: View) -> Unit)? = null
         var callbackCheckbox: ((task: Task, position: Int) -> Unit)? = null
+        var callbackTag: ((task: Task, position: Int) -> Unit)? = null
     }
 
     override fun bind(item: Task) {
@@ -25,13 +27,16 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
                 tvTitle.paintFlags = 0
             }
             tvTitle.text = item.message
-            tvTag.text = item.tag
+            tvTag.text = if (item.tag.isNotBlank()) item.tag else context.getString(R.string.backlog_add_tag)
             tvDate.text = item.date
             onClick {
                 callbackTask?.invoke(item, adapterPosition)
             }
             ivMore.onClick {
                 callbackMenu?.invoke(item, adapterPosition, it)
+            }
+            tvTag.onClick {
+                callbackTag?.invoke(item, adapterPosition)
             }
             checkbox.onClick {
                 when(checkbox.isChecked) {

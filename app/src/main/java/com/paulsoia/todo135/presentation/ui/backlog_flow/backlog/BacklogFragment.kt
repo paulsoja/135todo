@@ -11,10 +11,7 @@ import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogTaskAdapter
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.MenuDialog
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.*
 import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_backlog.*
 import kotlinx.android.synthetic.main.toolbar_backlog.*
@@ -48,10 +45,12 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     private fun initRecyclerView() {
-        rvTasks.layoutManager = LinearLayoutManager(requireContext())
-        val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
-        rvTasks.addItemDecoration(divider)
-        rvTasks.adapter = adapter
+        with(rvTasks) {
+            layoutManager = LinearLayoutManager(requireContext())
+            val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+            addItemDecoration(divider)
+            adapter = this@BacklogFragment.adapter
+        }
 
         //todo for next release
         /*val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP.or(ItemTouchHelper.DOWN), 0) {
@@ -78,7 +77,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val result = it.filter {
                 when (viewModel.getFilterType()) {
-                    "tag" -> (it as? Task)?.tag != ""
+                    "tag" -> (it as? Task)?.tag != null
                     "date" -> (it as? Task)?.date != ""
                     else -> (it as? Task)?.message != ""
                 }
@@ -118,6 +117,12 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         popup.show()
     }
 
+    override fun onTagClicked(task: Task, position: Int) {
+        TagDialog.newInstance(task).apply {
+            setTargetFragment(this@BacklogFragment, 0)
+        }.show(parentFragmentManager, "tag")
+    }
+
     private fun filterMenu(v: View) {
         PopupMenu(requireContext(), v).apply {
             inflate(R.menu.filter_menu)
@@ -136,7 +141,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val result = it.filter {
                 when(value) {
-                    "tag" -> (it as? Task)?.tag != ""
+                    "tag" -> (it as? Task)?.tag != null
                     "date" -> (it as? Task)?.date != ""
                     else -> (it as? Task)?.message != ""
                 }

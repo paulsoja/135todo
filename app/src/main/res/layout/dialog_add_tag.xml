@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    android:paddingStart="@dimen/default_margin"
+    android:paddingTop="@dimen/default_margin"
+    android:paddingEnd="@dimen/default_margin">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/default_margin"
+        android:text="@string/backlog_choose_tag_title"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/holderNewTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etNewTag"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_half_margin"
+            android:layout_weight="1"
+            android:autofillHints="@string/backlog_add_tag_hint"
+            android:hint="@string/backlog_add_tag_hint"
+            android:inputType="textShortMessage" />
+
+        <ImageView
+            android:id="@+id/ivSave"
+            android:layout_width="@dimen/default_ripple_btn_size"
+            android:layout_height="@dimen/default_ripple_btn_size"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/default_small_margin"
+            android:background="@drawable/bg_default_oval_ripple"
+            android:padding="@dimen/default_small_margin"
+            android:src="@drawable/ic_add_box"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTags"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:overScrollMode="always"
+            android:paddingBottom="@dimen/default_half_margin"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_tag" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_cancel" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnOk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text_ok" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

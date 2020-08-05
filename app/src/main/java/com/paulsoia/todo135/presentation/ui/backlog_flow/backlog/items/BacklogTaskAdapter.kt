@@ -13,8 +13,10 @@ import com.paulsoia.todo135.presentation.utils.inflate
 
 class BacklogTaskAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    private val TYPE_TITLE = 0
-    private val TYPE_LIST = 1
+    companion object {
+        private const val TYPE_TITLE = 0
+        private const val TYPE_LIST = 1
+    }
 
     private val backlogItemsViewHolder = BacklogItemsViewHolder
 
@@ -24,6 +26,7 @@ class BacklogTaskAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
             backlogItemsViewHolder.callbackTask = { task, pos -> callback?.onTaskClicked(task, pos) }
             backlogItemsViewHolder.callbackMenu = { task, pos, v -> callback?.onMenuClicked(task, pos, v) }
             backlogItemsViewHolder.callbackCheckbox = { task, pos -> callback?.onCheckboxClicked(task, pos) }
+            backlogItemsViewHolder.callbackTag = { task, pos -> callback?.onTagClicked(task, pos) }
         }
 
     private val items = mutableListOf<TaskMarker>()
@@ -65,6 +68,7 @@ class BacklogTaskAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
         fun onCheckboxClicked(task: Task, position: Int)
         fun onTaskClicked(task: Task, position: Int)
         fun onMenuClicked(task: Task, position: Int, v: View)
+        fun onTagClicked(task: Task, position: Int)
     }
 
 }
