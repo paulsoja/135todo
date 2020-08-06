@@ -33,7 +33,7 @@ class TagAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     internal fun updateItem(tag: Tag, position: Int) {
         items.find { (it as? Tag)?.id == tag.id }.apply {
             (this as? Tag)?.isChecked = tag.isChecked
-            notifyDataSetChanged()
+            notifyItemChanged(position)
         }
     }
 

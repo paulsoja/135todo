@@ -93,15 +93,24 @@ class TagDialog : BaseBottomSheetDialogFragment(), TagAdapter.TagListener {
 
     override fun onTagClicked(tag: Tag, position: Int) {
         viewModel.result.observe(viewLifecycleOwner, Observer { list ->
-            list.forEach { (it as Tag).isChecked = false }
-            list.find { (it as? Tag)?.tag == tag.tag }?.let {
+            list.forEachIndexed { index, tagMarker ->
+                if((tagMarker as Tag).isChecked) {
+                    tagMarker.isChecked = false
+                    adapter.updateItem(tagMarker, index)
+                }
+                if (tagMarker.tag == tag.tag) {
+                    viewModel.message.value?.let { it.tag = tag.tag }
+                    tagMarker.isChecked = true
+                    adapter.updateItem(tagMarker, index)
+                }
+            }
+            /*list.find { (it as? Tag)?.tag == tag.tag }?.let {
                 viewModel.message.value?.let { it.tag = tag.tag }
                 (it as? Tag)?.isChecked = true
             }.also {
                 adapter.swapData(list)
-            }
+            }*/
         })
-
     }
 
 }
