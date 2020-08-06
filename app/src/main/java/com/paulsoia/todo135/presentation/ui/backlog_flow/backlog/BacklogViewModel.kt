@@ -63,4 +63,8 @@ class BacklogViewModel(
 
     internal fun getFilterType() = prefRepository.getHowToFilterTask() ?: "all"
 
+    internal fun saveSortType(type: String) = prefRepository.setHowToSortTask(type)
+
+    internal fun getSortType() = prefRepository.getHowToSortTask() ?: "reset"
+
 }

@@ -35,7 +35,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         getTasks()
         updateTasks()
         initRecyclerView()
-        ivSort.onClick { Toast.makeText(requireContext(), "sort", Toast.LENGTH_SHORT).show() }
+        ivSort.onClick { sortMenu(it) }
         ivFilter.onClick { filterMenu(it) }
         fabAdd.onClick {
             NewTaskDialog.newInstance().apply {
@@ -78,7 +78,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
             val result = it.filter {
                 when (viewModel.getFilterType()) {
                     "tag" -> (it as? Task)?.tag != null
-                    "date" -> (it as? Task)?.date != ""
+                    "date" -> (it as? Task)?.date != null
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -123,6 +123,36 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         }.show(parentFragmentManager, "tag")
     }
 
+    private fun sortMenu(v: View) {
+        PopupMenu(requireContext(), v).apply {
+            inflate(R.menu.sort_menu)
+            setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.itemName -> sortByValue("name")
+                    R.id.itemTag -> sortByValue("tag")
+                    R.id.itemDate -> sortByValue("date")
+                    R.id.itemReset -> sortByValue("reset")
+                }
+                return@setOnMenuItemClickListener true
+            }
+        }.show()
+    }
+
+    private fun sortByValue(value: String) {
+        viewModel.result.observe(viewLifecycleOwner, Observer {
+            val result = it.filter {
+                when(value) {
+                    "name" -> (it as? Task)?.message != null
+                    "tag" -> (it as? Task)?.tag != null
+                    "date" -> (it as? Task)?.date != null
+                    else -> (it as? Task)?.message != ""
+                }
+            }
+            viewModel.saveSortType(value)
+            adapter.swapData(result)
+        })
+    }
+
     private fun filterMenu(v: View) {
         PopupMenu(requireContext(), v).apply {
             inflate(R.menu.filter_menu)
@@ -142,7 +172,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
             val result = it.filter {
                 when(value) {
                     "tag" -> (it as? Task)?.tag != null
-                    "date" -> (it as? Task)?.date != ""
+                    "date" -> (it as? Task)?.date != null
                     else -> (it as? Task)?.message != ""
                 }
             }
