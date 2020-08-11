@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
 import com.paulsoia.todo135.presentation.utils.onClick
@@ -38,15 +39,15 @@ class MenuDialog : BaseBottomSheetDialogFragment() {
             tvToday.onClick { setDateAndUpdate(tsk, 0) }
             tvTomorrow.onClick { setDateAndUpdate(tsk, +1) }
             tvBig.onClick {
-                tsk.level = "big"
+                tsk.level = LevelType.BIG
                 menuViewModel.tryUpdateTask(tsk)
             }
             tvMedium.onClick {
-                tsk.level = "medium"
+                tsk.level = LevelType.MEDIUM
                 menuViewModel.tryUpdateTask(tsk)
             }
             tvSmall.onClick {
-                tsk.level = "small"
+                tsk.level = LevelType.SMALL
                 menuViewModel.tryUpdateTask(tsk)
             }
         }

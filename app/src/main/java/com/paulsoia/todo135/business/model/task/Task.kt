@@ -10,7 +10,7 @@ data class Task(
     var message: String,
     var tag: String,
     val category: String,
-    var level: String,
+    var level: LevelType,
     var isComplete: Boolean = false
 ) : Parcelable, TaskMarker {
 
@@ -21,7 +21,7 @@ data class Task(
             message: String = "",
             tag: String = "",
             category: String = "",
-            level: String = "",
+            level: LevelType = LevelType.NONE,
             isComplete: Boolean = false
         ) = Task(
             id = id,

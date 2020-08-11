@@ -3,12 +3,14 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.backlog
 import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.task.FilterType
+import com.paulsoia.todo135.business.model.task.LevelType
+import com.paulsoia.todo135.business.model.task.SortType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogTaskAdapter
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.*
@@ -77,8 +79,8 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val result = it.filter {
                 when (viewModel.getFilterType()) {
-                    "tag" -> (it as? Task)?.tag != null
-                    "date" -> (it as? Task)?.date != null
+                    FilterType.TAG -> (it as? Task)?.tag != null
+                    FilterType.DATE -> (it as? Task)?.date != null
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -128,23 +130,23 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
             inflate(R.menu.sort_menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.itemName -> sortByValue("name")
-                    R.id.itemTag -> sortByValue("tag")
-                    R.id.itemDate -> sortByValue("date")
-                    R.id.itemReset -> sortByValue("reset")
+                    R.id.itemName -> sortByValue(SortType.NAME)
+                    R.id.itemTag -> sortByValue(SortType.TAG)
+                    R.id.itemDate -> sortByValue(SortType.DATE)
+                    R.id.itemReset -> sortByValue(SortType.RESET)
                 }
                 return@setOnMenuItemClickListener true
             }
         }.show()
     }
 
-    private fun sortByValue(value: String) {
+    private fun sortByValue(value: SortType) {
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val result = it.filter {
                 when(value) {
-                    "name" -> (it as? Task)?.message != null
-                    "tag" -> (it as? Task)?.tag != null
-                    "date" -> (it as? Task)?.date != null
+                    SortType.NAME -> (it as? Task)?.message != null
+                    SortType.TAG -> (it as? Task)?.tag != null
+                    SortType.DATE -> (it as? Task)?.date != null
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -158,21 +160,21 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
             inflate(R.menu.filter_menu)
             setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.itemTag -> filterByValue("tag")
-                    R.id.itemDate -> filterByValue("date")
-                    R.id.itemAll -> filterByValue("all")
+                    R.id.itemTag -> filterByValue(FilterType.TAG)
+                    R.id.itemDate -> filterByValue(FilterType.DATE)
+                    R.id.itemAll -> filterByValue(FilterType.ALL)
                 }
                 return@setOnMenuItemClickListener true
             }
         }.show()
     }
 
-    private fun filterByValue(value: String) {
+    private fun filterByValue(value: FilterType) {
         viewModel.result.observe(viewLifecycleOwner, Observer {
             val result = it.filter {
                 when(value) {
-                    "tag" -> (it as? Task)?.tag != null
-                    "date" -> (it as? Task)?.date != null
+                    FilterType.TAG -> (it as? Task)?.tag != null
+                    FilterType.DATE -> (it as? Task)?.date != null
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -184,7 +186,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     private fun resetTask(task: Task) {
         task.isComplete = false
         task.date = ""
-        task.level = ""
+        task.level = LevelType.NONE
         viewModel.updateTask(task)
         updateTasks()
     }

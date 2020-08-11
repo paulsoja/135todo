@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
+import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber
 
@@ -20,7 +21,7 @@ class EditTaskViewModel(
         val updateTaskResult = MutableLiveData<Boolean>()
         when {
             task.message.isEmpty() -> {}
-            task.level.isBlank() -> {}
+            task.level == LevelType.NONE -> {}
             else -> {
                 isViewLoading.value = true
                 warningResult.value = ""

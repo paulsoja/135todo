@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
 import com.paulsoia.todo135.presentation.utils.onClick
@@ -52,7 +53,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     private fun getTaskModel(): Task {
         val task: Task
         val message = etTask.text.toString()
-        val level = "" //todo change to boolean
+        val level = LevelType.NONE
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = sdf.format(System.currentTimeMillis())
         val category = ""

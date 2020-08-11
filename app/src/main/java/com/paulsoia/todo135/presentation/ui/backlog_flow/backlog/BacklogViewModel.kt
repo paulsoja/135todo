@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.DeleteTaskByIdUseCase
 import com.paulsoia.todo135.business.interactor.GetAllFilterTasksUseCase
 import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
+import com.paulsoia.todo135.business.model.task.FilterType
+import com.paulsoia.todo135.business.model.task.SortType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.business.repository.PrefRepository
@@ -59,12 +61,12 @@ class BacklogViewModel(
         }
     }
 
-    internal fun saveFilterType(type: String) = prefRepository.setHowToFilterTask(type)
+    internal fun saveFilterType(type: FilterType) = prefRepository.setHowToFilterTask(type)
 
-    internal fun getFilterType() = prefRepository.getHowToFilterTask() ?: "all"
+    internal fun getFilterType() = prefRepository.getHowToFilterTask() ?: FilterType.ALL
 
-    internal fun saveSortType(type: String) = prefRepository.setHowToSortTask(type)
+    internal fun saveSortType(type: SortType) = prefRepository.setHowToSortTask(type)
 
-    internal fun getSortType() = prefRepository.getHowToSortTask() ?: "reset"
+    internal fun getSortType() = prefRepository.getHowToSortTask() ?: SortType.RESET
 
 }

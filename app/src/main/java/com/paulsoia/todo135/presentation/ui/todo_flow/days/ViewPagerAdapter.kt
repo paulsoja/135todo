@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.business.model.task.Title
@@ -40,22 +41,22 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
 
         val filterList = items.filter { (it as Task).date == sdf.format(date.time) }
 
-        val big: MutableList<TaskMarker> = filterList.filter { (it as Task).level == "big" }.take(1).toMutableList()
+        val big: MutableList<TaskMarker> = filterList.filter { (it as Task).level == LevelType.BIG }.take(1).toMutableList()
         if (big.isEmpty()) {
-            big.add(Task.empty(level = "big"))
+            big.add(Task.empty(level = LevelType.BIG))
         }
 
-        val medium: MutableList<TaskMarker> = filterList.filter { (it as Task).level == "medium" }.take(3).toMutableList()
+        val medium: MutableList<TaskMarker> = filterList.filter { (it as Task).level == LevelType.MEDIUM }.take(3).toMutableList()
         if (medium.size < 3) {
             for (i in 1..3-medium.size) {
-                medium.add(Task.empty(level = "medium"))
+                medium.add(Task.empty(level = LevelType.MEDIUM))
             }
         }
 
-        val small: MutableList<TaskMarker> = filterList.filter { (it as Task).level == "small" }.take(3).toMutableList()
+        val small: MutableList<TaskMarker> = filterList.filter { (it as Task).level == LevelType.SMALL }.take(3).toMutableList()
         if (small.size < 3) {
             for (i in 1..5-small.size) {
-                small.add(Task.empty(level = "small"))
+                small.add(Task.empty(level = LevelType.SMALL))
             }
         }
 

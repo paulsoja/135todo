@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/large_title_text_size"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivMore"
+        app:layout_constraintEnd_toStartOf="@+id/ivPush"
         android:paddingTop="@dimen/default_small_margin"
         android:paddingBottom="@dimen/default_small_margin"
         app:layout_constraintStart_toEndOf="@+id/checkbox"
@@ -57,7 +57,7 @@
         tools:text="medium" />
 
     <ImageView
-        android:id="@+id/ivMore"
+        android:id="@+id/ivPush"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,7 +66,7 @@
         android:layout_margin="@dimen/default_half_margin"
         android:background="@drawable/bg_default_oval_ripple"
         android:padding="@dimen/default_half_margin"
-        android:src="@drawable/ic_more_vert"
+        android:src="@drawable/ic_publish"
         tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

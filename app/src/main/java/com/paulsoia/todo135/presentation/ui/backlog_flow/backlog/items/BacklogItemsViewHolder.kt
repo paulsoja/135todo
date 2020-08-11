@@ -2,6 +2,7 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items
 
 import android.graphics.Paint
 import android.view.View
+import androidx.core.view.isVisible
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseViewHolder
@@ -22,31 +23,29 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
             if (item.isComplete) {
                 checkbox.isChecked = true
                 tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                ivPush.isVisible = false
             } else {
                 checkbox.isChecked = false
                 tvTitle.paintFlags = 0
+                ivPush.isVisible = true
             }
             tvTitle.text = item.message
             tvTag.text = if (item.tag.isNotBlank()) item.tag else context.getString(R.string.backlog_add_tag)
             tvDate.text = item.date
-            onClick {
-                callbackTask?.invoke(item, adapterPosition)
-            }
-            ivMore.onClick {
-                callbackMenu?.invoke(item, adapterPosition, it)
-            }
-            tvTag.onClick {
-                callbackTag?.invoke(item, adapterPosition)
-            }
+            onClick { callbackTask?.invoke(item, adapterPosition) }
+            ivPush.onClick { callbackMenu?.invoke(item, adapterPosition, it) }
+            tvTag.onClick { callbackTag?.invoke(item, adapterPosition) }
             checkbox.onClick {
                 when(checkbox.isChecked) {
                     true -> {
                         item.isComplete = true
                         tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                        ivPush.isVisible = false
                     }
                     false -> {
                         item.isComplete = false
                         tvTitle.paintFlags = 0
+                        ivPush.isVisible = true
                     }
                 }
                 callbackCheckbox?.invoke(item, adapterPosition)
