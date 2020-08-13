@@ -7,7 +7,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseViewHolder
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.item_task_day.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -30,7 +29,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
                 etTask.paintFlags = 0
             }
             etTask.setText(item.message)
-            checkbox.onClick {
+            checkbox.setOnClickListener {
                 if (item.id != null && !etTask.text.isNullOrBlank()) {
                     callback?.invoke(item.also {
                         it.isComplete = checkbox.isChecked

@@ -14,7 +14,6 @@ import com.paulsoia.todo135.business.model.task.SortType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.ui.backlog_flow.backlog.items.BacklogTaskAdapter
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.*
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_backlog.*
 import kotlinx.android.synthetic.main.toolbar_backlog.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,9 +36,9 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         getTasks()
         updateTasks()
         initRecyclerView()
-        ivSort.onClick { sortMenu(it) }
-        ivFilter.onClick { filterMenu(it) }
-        fabAdd.onClick {
+        ivSort.setOnClickListener { sortMenu(it) }
+        ivFilter.setOnClickListener { filterMenu(it) }
+        fabAdd.setOnClickListener {
             NewTaskDialog.newInstance().apply {
                 setTargetFragment(this@BacklogFragment, 0)
             }.show(parentFragmentManager, "new")
@@ -49,8 +48,8 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     private fun initRecyclerView() {
         with(rvTasks) {
             layoutManager = LinearLayoutManager(requireContext())
-            val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
-            addItemDecoration(divider)
+            /*val divider = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+            addItemDecoration(divider)*/
             adapter = this@BacklogFragment.adapter
         }
 

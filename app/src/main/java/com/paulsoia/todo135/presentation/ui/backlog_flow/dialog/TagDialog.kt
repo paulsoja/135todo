@@ -14,7 +14,6 @@ import com.paulsoia.todo135.business.model.tag.Tag
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.items.TagAdapter
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.dialog_add_tag.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -57,9 +56,9 @@ class TagDialog : BaseBottomSheetDialogFragment(), TagAdapter.TagListener {
         initAdapter()
         getTags()
         viewModel.getAllTags()
-        ivSave.onClick { saveNewTag() }
-        btnCancel.onClick { dismiss() }
-        btnOk.onClick { viewModel.updateTask(viewModel.message.value!!).observe(viewLifecycleOwner, Observer {
+        ivSave.setOnClickListener { saveNewTag() }
+        btnCancel.setOnClickListener { dismiss() }
+        btnOk.setOnClickListener { viewModel.updateTask(viewModel.message.value!!).observe(viewLifecycleOwner, Observer {
             if (it) dismiss()
         }) }
     }

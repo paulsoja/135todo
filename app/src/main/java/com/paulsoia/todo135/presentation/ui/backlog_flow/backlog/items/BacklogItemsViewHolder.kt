@@ -6,7 +6,6 @@ import androidx.core.view.isVisible
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseViewHolder
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.item_task.view.*
 
 class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
@@ -32,10 +31,10 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
             tvTitle.text = item.message
             tvTag.text = if (item.tag.isNotBlank()) item.tag else context.getString(R.string.backlog_add_tag)
             tvDate.text = item.date
-            onClick { callbackTask?.invoke(item, adapterPosition) }
-            ivPush.onClick { callbackMenu?.invoke(item, adapterPosition, it) }
-            tvTag.onClick { callbackTag?.invoke(item, adapterPosition) }
-            checkbox.onClick {
+            setOnClickListener { callbackTask?.invoke(item, adapterPosition) }
+            ivPush.setOnClickListener { callbackMenu?.invoke(item, adapterPosition, it) }
+            tvTag.setOnClickListener { callbackTag?.invoke(item, adapterPosition) }
+            checkbox.setOnClickListener {
                 when(checkbox.isChecked) {
                     true -> {
                         item.isComplete = true

@@ -9,7 +9,6 @@ import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.dialog_new_task.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -30,7 +29,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
         etTask.requestFocus()
         initLoader()
         warning()
-        tvSave.onClick { saveTask() }
+        tvSave.setOnClickListener { saveTask() }
     }
 
     private fun saveTask() {

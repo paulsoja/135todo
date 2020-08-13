@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_light_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -10,6 +11,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTasks"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:paddingStart="@dimen/default_half_margin"
+        android:paddingEnd="@dimen/default_half_margin"
         tools:listitem="@layout/item_task"
         tools:itemCount="5"
         android:layout_width="match_parent"
@@ -21,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_half_margin"
+        android:paddingBottom="@dimen/default_half_margin"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

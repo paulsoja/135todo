@@ -1,12 +1,12 @@
 package com.paulsoia.todo135.presentation.ui.stats_flow.stats
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.widget.PopupMenu
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.stats.DateRangeType
 import com.paulsoia.todo135.presentation.base.BaseFragment
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_stats.*
 
 class StatsFragment : BaseFragment() {
@@ -19,12 +19,13 @@ class StatsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvDateRange.onClick { openDateMenu() }
+        tvDateRange.setOnClickListener { openDateMenu() }
     }
 
     private fun openDateMenu() {
         val popup = PopupMenu(requireContext(), tvDateRange)
         popup.inflate(R.menu.date_range_menu)
+        popup.gravity = Gravity.CENTER
         popup.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.menuDays -> setStatRange(DateRangeType.DAY)

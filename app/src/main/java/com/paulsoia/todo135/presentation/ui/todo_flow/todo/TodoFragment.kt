@@ -9,7 +9,6 @@ import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.ViewPagerAdapter
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.fragment_todo.*
 import kotlinx.android.synthetic.main.toolbar_todo.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,7 +35,7 @@ class TodoFragment : BaseFragment() {
             //setupTabs()
             getTasks()
         })
-        ivSwap.onClick { Toast.makeText(requireContext(), "swap", Toast.LENGTH_SHORT).show() }
+        ivSwap.setOnClickListener { Toast.makeText(requireContext(), "swap", Toast.LENGTH_SHORT).show() }
         tvToday.text = getDate(1, true)
     }
 

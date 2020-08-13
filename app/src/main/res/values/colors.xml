@@ -12,6 +12,7 @@
     <color name="grey">#888888</color>
 
     <color name="grey_light">#E0E0E0</color>
+    <color name="grey_light_background">#F0F0F0</color>
 
     <color name="ripple_light">#33FFFFFF</color>
     <color name="ripple_dark">#14000000</color>

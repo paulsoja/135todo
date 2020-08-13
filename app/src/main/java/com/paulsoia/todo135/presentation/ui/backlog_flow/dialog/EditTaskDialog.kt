@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
-import com.paulsoia.todo135.presentation.utils.onClick
 import kotlinx.android.synthetic.main.dialog_edit_task.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,7 +40,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
         viewModel.message.observe(viewLifecycleOwner, Observer {
             etMessage.setText(it.message)
         })
-        btnEdit.onClick {
+        btnEdit.setOnClickListener {
             val message = etMessage.text.toString()
             val task = viewModel.message.value
             task?.message = message

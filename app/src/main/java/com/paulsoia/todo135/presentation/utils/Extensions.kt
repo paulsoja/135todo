@@ -15,12 +15,6 @@ import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.Replace
 
-fun View.onClick(call: (v: View) -> Unit) {
-    setOnClickListener {
-        call.invoke(it)
-    }
-}
-
 inline fun <reified T : Enum<T>> getEnumTypeValue(type: String): T? {
     val values = enumValues<T>()
     return values.firstOrNull {
