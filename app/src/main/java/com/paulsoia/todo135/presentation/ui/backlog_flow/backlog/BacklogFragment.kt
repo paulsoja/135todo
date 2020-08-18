@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.PopupMenu
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R

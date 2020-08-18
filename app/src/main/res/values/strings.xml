@@ -41,4 +41,22 @@
 
     <!--stats-->
     <string name="stat_title">Statistics</string>
+    <string name="stat_day_text">today</string>
+    <string name="stat_week_text">this week</string>
+    <string name="stat_month_text">this month</string>
+    <string name="stat_custom_text">custom</string>
+
+    <!--settings-->
+    <string name="settings_title">Settings</string>
+    <string name="settings_stats_title">Set up statistics</string>
+    <string name="settings_stats_desc">Set up your statistic preferences</string>
+    <string name="settings_reminders_title">Reminders</string>
+    <string name="settings_reminders_desc">Set up reminders to remember to take notes</string>
+    <string name="settings_widget_title">Widget</string>
+    <string name="settings_widget_desc">Set up widget to see it on the desktop</string>
+    <string name="settings_user_name_title">User name</string>
+    <string name="settings_user_no_name_hint">No name</string>
+    <string name="settings_about_methodology">About methodology</string>
+    <string name="settings_about_app">About app</string>
+    <string name="settings_logout_text">Logout and erase all data</string>
 </resources>

@@ -10,4 +10,5 @@ class SettingsFragment : BaseFragment() {
     }
 
     override val layoutRes = R.layout.fragment_settings
+
 }

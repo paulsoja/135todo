@@ -11,7 +11,7 @@ import com.paulsoia.todo135.R
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
-    open val resLayout = 0
+    open val resLayout = R.layout.dialog_container
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
