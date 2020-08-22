@@ -52,7 +52,7 @@ class AppFragment : BaseFragment() {
                         navigate().newRootScreen(Screens.SettingsFlowScreen)
                         true
                     }
-                    else -> false
+                    else -> true
                 }
             }
         }

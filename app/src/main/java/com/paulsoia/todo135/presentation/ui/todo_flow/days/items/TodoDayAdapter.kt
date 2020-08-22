@@ -22,7 +22,7 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     var callback: TaskListener? = null
     set(value) {
         field = value
-        listViewHolder.callback = { task -> callback?.onCheckboxClick(task) }
+        listViewHolder.callbackCheckbox = { task -> callback?.onCheckboxClick(task) }
         listViewHolder.callbackDrag = { vh -> callback?.onDragItem(vh) }
     }
 

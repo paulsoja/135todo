@@ -133,6 +133,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/holderReminder"
+                android:background="@drawable/bg_default_ripple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -183,6 +184,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/holderWidget"
+                android:background="@drawable/bg_default_ripple"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -222,6 +224,57 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/ivWidget"
                     app:layout_constraintTop_toBottomOf="@+id/tvWidgetTitle" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/grey_light"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/holderTheme"
+                android:background="@drawable/bg_default_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:layout_marginBottom="@dimen/default_margin"
+                    android:padding="@dimen/default_half_margin"
+                    android:src="@drawable/ic_pallete"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvThemeTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_marginTop="@dimen/default_margin"
+                    android:text="@string/settings_theme_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivTheme"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvThemeDesc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:text="@string/settings_theme_desc"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivTheme"
+                    app:layout_constraintTop_toBottomOf="@+id/tvThemeTitle" />
 
                 <View
                     android:layout_width="match_parent"

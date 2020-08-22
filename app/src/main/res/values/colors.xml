@@ -11,6 +11,15 @@
     <color name="green">#1EB763</color>
     <color name="blue">#007AFF</color>
     <color name="grey">#888888</color>
+    
+    <!--blue theme-->
+    <color name="main_blue">#2196f3</color>
+    <color name="main_blue_dark">#0069c0</color>
+    <color name="main_blue_light">#6ec6ff</color>
+    <!--indigo theme-->
+    <color name="main_indigo">#9fa8da</color>
+    <color name="main_indigo_dark">#6f79a8</color>
+    <color name="main_indigo_light">#d1d9ff</color>
 
     <color name="grey_light">#E0E0E0</color>
     <color name="grey_light_background">#F0F0F0</color>

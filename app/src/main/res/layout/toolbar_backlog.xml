@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:elevation="2dp"
     android:id="@+id/toolbar"
-    android:background="@color/white"
+    android:background="?attr/backgroundColor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -17,11 +17,11 @@
         android:padding="16dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:drawableStart="@drawable/ic_all_list"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:drawablePadding="16dp"
-        android:text="@string/backlog_all_task" />
+        android:text="@string/backlog_all_task"
+        app:drawableStartCompat="@drawable/ic_all_list" />
 
     <ImageView
         android:id="@+id/ivSort"

@@ -26,7 +26,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        etTask.requestFocus()
+        tvTask.requestFocus()
         initLoader()
         warning()
         tvSave.setOnClickListener { saveTask() }
@@ -51,7 +51,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
 
     private fun getTaskModel(): Task {
         val task: Task
-        val message = etTask.text.toString()
+        val message = tvTask.text.toString()
         val level = LevelType.NONE
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val date = sdf.format(System.currentTimeMillis())
