@@ -16,10 +16,9 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
 
     companion object {
         private const val TASK_ARG = "task"
-        private const val POSITION_ARG = "position"
 
-        fun newInstance(task: Task, position: Int) = EditTaskDialog().apply {
-            arguments = bundleOf(TASK_ARG to task, POSITION_ARG to position)
+        fun newInstance(task: Task) = EditTaskDialog().apply {
+            arguments = bundleOf(TASK_ARG to task)
         }
     }
 
@@ -46,15 +45,12 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
             task?.message = message
             task?.let { tsk ->
                 viewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, Observer {
-                    if (it) {
-                        getUpdateCallback()?.onUpdateTask()
-                    }
+                    if (it) { getUpdateCallback()?.onUpdateTask(tsk) }
                 })
             }
         }
     }
 
-    private fun getUpdateCallback(): UpdateBacklogCallback? =
-        targetFragment as? UpdateBacklogCallback
+    private fun getUpdateCallback(): UpdateBacklogCallback? = targetFragment as? UpdateBacklogCallback
 
 }

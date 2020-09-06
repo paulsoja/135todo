@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         navigate().newRootScreen(Screens.AppScreen)
     }
 
-    val navigator: Navigator =
+    private val navigator: Navigator =
         object : SupportAppNavigator(this, supportFragmentManager, R.id.fragment_container) {
             override fun setupFragmentTransaction(
                 command: @NotNull Command,

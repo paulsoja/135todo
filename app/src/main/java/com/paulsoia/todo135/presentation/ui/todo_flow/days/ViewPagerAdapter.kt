@@ -17,6 +17,13 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
 
     private val ITEM_SIZE = 3
     private val items = mutableListOf<TaskMarker>()
+    private val fragment = TodoDayFragment
+
+    var callback: UpdatePageCallback? = null
+        set(value) {
+            field = value
+            fragment.callback = { task -> callback?.onUpdatePage() }
+        }
 
     fun swapData(list: List<TaskMarker>) {
         items.clear()
@@ -32,7 +39,7 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
         val result = mutableListOf<TaskMarker>()
         val date = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        when(position) {
+        when (position) {
             0 -> date.add(Calendar.DATE, -1)
             1 -> date.add(Calendar.DATE, 0)
             2 -> date.add(Calendar.DATE, +1)
@@ -41,21 +48,24 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
 
         val filterList = items.filter { (it as Task).date == sdf.format(date.time) }
 
-        val big: MutableList<TaskMarker> = filterList.filter { (it as Task).level == LevelType.BIG }.take(1).toMutableList()
+        val big: MutableList<TaskMarker> =
+            filterList.filter { (it as Task).level == LevelType.BIG }.take(1).toMutableList()
         if (big.isEmpty()) {
             big.add(Task.empty(level = LevelType.BIG))
         }
 
-        val medium: MutableList<TaskMarker> = filterList.filter { (it as Task).level == LevelType.MEDIUM }.take(3).toMutableList()
+        val medium: MutableList<TaskMarker> =
+            filterList.filter { (it as Task).level == LevelType.MEDIUM }.take(3).toMutableList()
         if (medium.size < 3) {
-            for (i in 1..3-medium.size) {
+            for (i in 1..3 - medium.size) {
                 medium.add(Task.empty(level = LevelType.MEDIUM))
             }
         }
 
-        val small: MutableList<TaskMarker> = filterList.filter { (it as Task).level == LevelType.SMALL }.take(3).toMutableList()
+        val small: MutableList<TaskMarker> =
+            filterList.filter { (it as Task).level == LevelType.SMALL }.take(3).toMutableList()
         if (small.size < 3) {
-            for (i in 1..5-small.size) {
+            for (i in 1..5 - small.size) {
                 small.add(Task.empty(level = LevelType.SMALL))
             }
         }
@@ -83,6 +93,10 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
             2 -> context.getString(R.string.text_tomorrow)
             else -> ""
         }
+    }
+
+    interface UpdatePageCallback {
+        fun onUpdatePage()
     }
 
 }

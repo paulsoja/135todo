@@ -36,7 +36,6 @@ abstract class FlowFragment : BaseFragment() {
                 nextFragment: @Nullable Fragment?,
                 fragmentTransaction: @NotNull FragmentTransaction
             ) {
-                // Fix incorrect order lifecycle categoryCategoryCallback of MainTabsFlowFragment
                 fragmentTransaction.setReorderingAllowed(true)
             }
         }

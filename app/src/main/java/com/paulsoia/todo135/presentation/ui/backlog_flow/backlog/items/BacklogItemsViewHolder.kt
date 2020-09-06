@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_task.view.*
 class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
 
     companion object {
-        var callbackTask: ((task: Task, position: Int) -> Unit)? = null
+        var callbackTask: ((task: Task) -> Unit)? = null
         var callbackMenu: ((task: Task, position: Int, v: View) -> Unit)? = null
         var callbackCheckbox: ((task: Task, position: Int) -> Unit)? = null
         var callbackTag: ((task: Task, position: Int) -> Unit)? = null
@@ -31,7 +31,7 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
             tvTitle.text = item.message
             tvTag.text = if (item.tag.isNotBlank()) item.tag else context.getString(R.string.backlog_add_tag)
             tvDate.text = item.date
-            setOnClickListener { callbackTask?.invoke(item, adapterPosition) }
+            setOnClickListener { callbackTask?.invoke(item) }
             ivPush.setOnClickListener { callbackMenu?.invoke(item, adapterPosition, it) }
             tvTag.setOnClickListener { callbackTag?.invoke(item, adapterPosition) }
             checkbox.setOnClickListener {

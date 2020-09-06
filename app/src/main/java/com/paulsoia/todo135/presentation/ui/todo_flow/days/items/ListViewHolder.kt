@@ -13,6 +13,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
     companion object {
         var callbackCheckbox: ((task: Task) -> Unit)? = null
         var callbackDrag: ((viewHolder: RecyclerView.ViewHolder) -> Unit)? = null
+        var callbackItem: ((task: Task) -> Unit)? = null
     }
 
     override fun bind(item: Task) {
@@ -25,8 +26,8 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
                 tvTask.paintFlags = 0
             }
             tvTask.text = item.message
-            setOnClickListener { callbackCheckbox?.invoke(item) }
             item.id?.let {
+                setOnClickListener { callbackItem?.invoke(item) }
                 checkbox.setOnClickListener {
                     callbackCheckbox?.invoke(item.also {
                         it.isComplete = checkbox.isChecked

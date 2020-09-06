@@ -24,12 +24,25 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
         field = value
         listViewHolder.callbackCheckbox = { task -> callback?.onCheckboxClick(task) }
         listViewHolder.callbackDrag = { vh -> callback?.onDragItem(vh) }
+        listViewHolder.callbackItem = { task -> callback?.onItemClick(task) }
     }
 
     fun swapData(list: List<TaskMarker>) {
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
+    }
+
+    fun updateItemById(task: TaskMarker) {
+        if (task is Task) {
+            items.forEachIndexed { index, taskMarker ->
+                if ((taskMarker as? Task)?.id == task.id) {
+                    (taskMarker as? Task)?.isComplete = task.isComplete
+                    (taskMarker as? Task)?.message = task.message
+                    notifyItemChanged(index)
+                }
+            }
+        }
     }
 
     fun moveItem(from: Int, to: Int) {
@@ -68,6 +81,7 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     interface TaskListener {
         fun onCheckboxClick(task: Task)
         fun onDragItem(viewHolder: RecyclerView.ViewHolder)
+        fun onItemClick(task: Task)
     }
 
 }

@@ -40,6 +40,10 @@ class StatsFragment : BaseFragment(), DatePickerDialog.OnDateSetListener {
         }
     }
 
+    private fun setStats() {
+
+    }
+
     private fun openDateMenu() {
         val popup = PopupMenu(requireContext(), tvDateRange)
         popup.inflate(R.menu.date_range_menu)

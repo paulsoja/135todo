@@ -37,6 +37,14 @@ class TaskDataRepository(
         }
     }
 
+    override suspend fun getTaskById(taskId: Long): Result<Task> {
+        return try {
+            Result.success(taskMapper.map(taskDao.getTaskById(taskId)))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
     override suspend fun getTasksByDate(date: String): Result<List<Task>> {
         return try {
             Result.success(taskDao.getTasksByDate(date).map {

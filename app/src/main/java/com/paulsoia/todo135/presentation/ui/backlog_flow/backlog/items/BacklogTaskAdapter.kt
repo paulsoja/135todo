@@ -23,7 +23,7 @@ class BacklogTaskAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     internal var callback: TaskListener? = null
         set(value) {
             field = value
-            backlogItemsViewHolder.callbackTask = { task, pos -> callback?.onTaskClicked(task, pos) }
+            backlogItemsViewHolder.callbackTask = { task -> callback?.onTaskClicked(task) }
             backlogItemsViewHolder.callbackMenu = { task, pos, v -> callback?.onMenuClicked(task, pos, v) }
             backlogItemsViewHolder.callbackCheckbox = { task, pos -> callback?.onCheckboxClicked(task, pos) }
             backlogItemsViewHolder.callbackTag = { task, pos -> callback?.onTagClicked(task, pos) }
@@ -66,7 +66,7 @@ class BacklogTaskAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface TaskListener {
         fun onCheckboxClicked(task: Task, position: Int)
-        fun onTaskClicked(task: Task, position: Int)
+        fun onTaskClicked(task: Task)
         fun onMenuClicked(task: Task, position: Int, v: View)
         fun onTagClicked(task: Task, position: Int)
     }

@@ -12,15 +12,19 @@ import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.presentation.base.BaseFragment
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.ListViewHolder
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.TodoDayAdapter
 import kotlinx.android.synthetic.main.fragment_todo_day.*
 import org.koin.android.ext.android.inject
 
-class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener {
+class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBacklogCallback {
 
     companion object {
         private const val ITEMS = "items"
+
+        var callback: ((task: Task) -> Unit)? = null
 
         fun newInstance(items: List<TaskMarker>) = TodoDayFragment()
             .apply { arguments = bundleOf(ITEMS to items) }
@@ -89,7 +93,9 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener {
         })
     }
 
-    private fun setListData() = viewModel.items.observe(viewLifecycleOwner, Observer { adapter.swapData(it) })
+    private fun setListData() = viewModel.items.observe(viewLifecycleOwner, Observer {
+        adapter.swapData(it)
+    })
 
     override fun onCheckboxClick(task: Task) = viewModel.updateTask(task)
 
@@ -98,5 +104,32 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener {
             touchHelper.startDrag(viewHolder)
         }
     }
+
+    override fun onItemClick(task: Task) {
+        EditTaskDialog.newInstance(task).apply {
+            setTargetFragment(this@TodoDayFragment, 0)
+        }.show(parentFragmentManager, "edit")
+    }
+
+    override fun onUpdateTask(task: Task?) {
+        task?.let { tsk ->
+            viewModel.getTaskById(tsk).observe(viewLifecycleOwner, Observer { tskRes ->
+                val result = viewModel.items.value
+                result?.find {itm ->
+                    (itm as? Task)?.id == tskRes.id && tskRes.id != null
+                }?.let { tm ->
+                    (tm as? Task)?.isComplete = task.isComplete
+                    (tm as? Task)?.message = task.message
+                    adapter.updateItemById(tm)
+                }
+            })
+        }
+        task?.let {
+            callback?.invoke(it)
+        }
+
+    }
+
+
 
 }

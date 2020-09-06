@@ -13,4 +13,5 @@ val useCasesModule = module {
     factory { GetAllFilterTasksUseCase(get()) }
     factory { GetAllTagsUseCase(get()) }
     factory { SaveNewTagUseCase(get()) }
+    factory { GetTaskByIdUseCase(get()) }
 }

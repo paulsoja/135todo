@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TodoFragment : BaseFragment() {
+class TodoFragment : BaseFragment(), ViewPagerAdapter.UpdatePageCallback {
 
     companion object {
         fun newInstance() = TodoFragment()
@@ -54,12 +54,13 @@ class TodoFragment : BaseFragment() {
         return sdf.format(date.time)
     }
 
-    private fun setupTabs() {
+    private fun setupTabs(currentTab: Int) {
         viewpageradapter = ViewPagerAdapter(childFragmentManager, requireContext())
+        viewpageradapter.callback = this
         viewpageradapter.swapData(items)
         viewPager.adapter = viewpageradapter
         tabs.setupWithViewPager(viewPager)
-        viewPager.currentItem = 1 //today tab
+        viewPager.currentItem = currentTab //today tab
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -73,13 +74,20 @@ class TodoFragment : BaseFragment() {
     private fun getTasks() {
         todoViewModel.resultTasks.observe(viewLifecycleOwner, Observer {
             items = it
-            setupTabs()
+            setupTabs(1)
         })
     }
 
     private fun initLoader() {
         todoViewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
             //loader.isVisible = it
+        })
+    }
+
+    override fun onUpdatePage() {
+        todoViewModel.getTaskWithDate().observe(viewLifecycleOwner, Observer {
+            //setupTabs()
+            getTasks()
         })
     }
 

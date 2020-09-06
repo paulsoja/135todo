@@ -96,8 +96,8 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         viewModel.updateTask(task)
     }
 
-    override fun onTaskClicked(task: Task, position: Int) {
-        EditTaskDialog.newInstance(task, position).apply {
+    override fun onTaskClicked(task: Task) {
+        EditTaskDialog.newInstance(task).apply {
             setTargetFragment(this@BacklogFragment, 0)
         }.show(parentFragmentManager, "edit")
     }
@@ -205,7 +205,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
         }.show(parentFragmentManager, "new")
     }
 
-    override fun onUpdateTask() {
+    override fun onUpdateTask(task: Task?) {
         viewModel.getAllTasks()
     }
 

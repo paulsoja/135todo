@@ -17,7 +17,7 @@ val viewModelModule = module {
     viewModel { BacklogViewModel(get(), get(), get(), get()) }
     viewModel { EditTaskViewModel(get()) }
     viewModel { MenuViewModel(get(), get()) }
-    viewModel { TodoDayViewModel(get()) }
+    viewModel { TodoDayViewModel(get(), get()) }
     viewModel { TagViewModel(get(), get(), get()) }
     viewModel { StatsViewModel(get()) }
 }
