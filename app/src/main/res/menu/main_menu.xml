@@ -6,27 +6,27 @@
         android:id="@+id/nav_todo"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:title="Todo"
+        android:title="@string/navigate_in_progress"
         android:icon="@drawable/ic_done_all"/>
 
     <item
         android:id="@+id/nav_backlog"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:title="Backlog"
+        android:title="@string/navigate_incoming"
         android:icon="@drawable/ic_list"/>
 
     <item
         android:id="@+id/nav_stats"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:title="Stats"
+        android:title="@string/navigate_stats"
         android:icon="@drawable/ic_stats"/>
 
     <item
         android:id="@+id/nav_menu"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:title="Menu"
+        android:title="@string/navigate_settings"
         android:icon="@drawable/ic_menu_open"/>
 </menu>

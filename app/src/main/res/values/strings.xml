@@ -13,6 +13,11 @@
     <string name="text_today">Today</string>
     <string name="text_tomorrow">Tomorrow</string>
 
+    <string name="navigate_in_progress">In progress</string>
+    <string name="navigate_incoming">Incoming</string>
+    <string name="navigate_stats">Statistic</string>
+    <string name="navigate_settings">Settings</string>
+
     <!--to-do-->
     <string name="todo_new_task">New task</string>
     <string name="todo_big_thing">One big thing</string>

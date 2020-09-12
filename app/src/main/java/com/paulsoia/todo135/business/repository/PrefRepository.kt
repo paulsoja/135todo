@@ -15,6 +15,9 @@ interface PrefRepository {
     fun setStatsRange(type: DateRangeType)
     fun getStatsRange(): DateRangeType?
 
+    fun saveName(name: String)
+    fun getName(): String?
+
     fun clear()
 
 }

@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 nextFragment: @Nullable Fragment?,
                 fragmentTransaction: @NotNull FragmentTransaction
             ) {
+                fragmentTransaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
                 fragmentTransaction.setReorderingAllowed(true)
             }
         }

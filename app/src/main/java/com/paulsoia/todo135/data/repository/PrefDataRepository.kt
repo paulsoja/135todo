@@ -16,6 +16,7 @@ class PrefDataRepository(
         const val FILTER_TYPE = "filter_type"
         const val SORT_TYPE = "sort_type"
         const val STATS_TYPE = "stats_type"
+        const val SETTINGS_NAME = "settings_name"
     }
 
     override fun setHowToFilterTask(type: FilterType) {
@@ -40,6 +41,14 @@ class PrefDataRepository(
 
     override fun getStatsRange(): DateRangeType? {
         return getEnumTypeValue<DateRangeType>(pref.getString(STATS_TYPE, DateRangeType.DAY.type) ?: DateRangeType.DAY.type)
+    }
+
+    override fun saveName(name: String) {
+        pref.edit { putString(SETTINGS_NAME, name) }
+    }
+
+    override fun getName(): String? {
+        return pref.getString(SETTINGS_NAME, "")
     }
 
     override fun clear() = pref.edit().clear().apply()
