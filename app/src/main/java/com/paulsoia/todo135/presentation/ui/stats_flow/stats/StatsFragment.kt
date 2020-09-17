@@ -27,9 +27,10 @@ class StatsFragment : BaseFragment(), DatePickerDialog.OnDateSetListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvDateRange.setOnClickListener { openDateMenu() }
+        holderDateRange.setOnClickListener { openDateMenu() }
         updateDateRangeText()
         initListeners()
+        initDate()
     }
 
     private fun initListeners() {
@@ -45,7 +46,7 @@ class StatsFragment : BaseFragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun openDateMenu() {
-        val popup = PopupMenu(requireContext(), tvDateRange)
+        val popup = PopupMenu(requireContext(), holderDateRange)
         popup.inflate(R.menu.date_range_menu)
         popup.gravity = Gravity.CENTER
         popup.setOnMenuItemClickListener {
@@ -78,6 +79,13 @@ class StatsFragment : BaseFragment(), DatePickerDialog.OnDateSetListener {
         c.set(Calendar.YEAR, year)
         c.set(Calendar.MONTH, month)
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        val currentDateString = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(c.time)
+        tvDate.text = currentDateString
+        updateDateRangeText(DateRangeType.CUSTOM)
+    }
+
+    private fun initDate() {
+        val c: Calendar = Calendar.getInstance()
         val currentDateString = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(c.time)
         tvDate.text = currentDateString
         updateDateRangeText(DateRangeType.CUSTOM)
