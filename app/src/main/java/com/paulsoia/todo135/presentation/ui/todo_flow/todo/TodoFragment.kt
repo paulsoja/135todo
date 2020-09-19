@@ -31,7 +31,7 @@ class TodoFragment : BaseFragment(), ViewPagerAdapter.UpdatePageCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initLoader()
-        todoViewModel.getTaskWithDate().observe(viewLifecycleOwner, Observer {
+        todoViewModel.getTaskWithDate().observe(viewLifecycleOwner, {
             //setupTabs()
             getTasks()
         })
@@ -72,20 +72,20 @@ class TodoFragment : BaseFragment(), ViewPagerAdapter.UpdatePageCallback {
     }
 
     private fun getTasks() {
-        todoViewModel.resultTasks.observe(viewLifecycleOwner, Observer {
+        todoViewModel.resultTasks.observe(viewLifecycleOwner, {
             items = it
             setupTabs(1)
         })
     }
 
     private fun initLoader() {
-        todoViewModel.isViewLoading.observe(viewLifecycleOwner, Observer {
+        todoViewModel.isViewLoading.observe(viewLifecycleOwner, {
             //loader.isVisible = it
         })
     }
 
     override fun onUpdatePage() {
-        todoViewModel.getTaskWithDate().observe(viewLifecycleOwner, Observer {
+        todoViewModel.getTaskWithDate().observe(viewLifecycleOwner, {
             //setupTabs()
             getTasks()
         })

@@ -1,19 +1,43 @@
 package com.paulsoia.todo135.presentation.ui.stats_flow.dialog
 
-import android.app.DatePickerDialog
-import android.app.Dialog
 import android.os.Bundle
+import android.view.View
+import com.paulsoia.todo135.R
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
+import ru.slybeaver.slycalendarview.SlyCalendarDialog
+import java.util.*
 
-import java.util.Calendar
 
-class DateDialog : BaseBottomSheetDialogFragment() {
+class DateDialog : BaseBottomSheetDialogFragment(), SlyCalendarDialog.Callback {
 
     companion object {
         fun newInstance() = DateDialog()
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+    override val resLayout = R.layout.dialog_date
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /*SlyCalendarDialog()
+            .setSingle(false)
+            .setCallback(this)
+            .show(childFragmentManager, "TAG_SLYCALENDAR")*/
+    }
+
+    override fun onCancelled() {
+
+    }
+
+    override fun onDataSelected(
+        firstDate: Calendar?,
+        secondDate: Calendar?,
+        hours: Int,
+        minutes: Int
+    ) {
+
+    }
+
+    /*override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c: Calendar = Calendar.getInstance()
         val year: Int = c.get(Calendar.YEAR)
         val month: Int = c.get(Calendar.MONTH)
@@ -25,6 +49,6 @@ class DateDialog : BaseBottomSheetDialogFragment() {
             month,
             day
         )
-    }
+    }*/
 
 }

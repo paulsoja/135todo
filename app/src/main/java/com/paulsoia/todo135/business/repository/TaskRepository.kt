@@ -15,7 +15,7 @@ interface TaskRepository {
 
     suspend fun getTaskById(taskId: Long): Result<Task>
 
-    suspend fun getTasksByDate(date: String): Result<List<Task>>
+    suspend fun getTasksByDate(date: Int): Result<List<Task>>
 
     suspend fun getTasksWithDate(): Result<List<Task>>
 

@@ -22,13 +22,11 @@ interface TaskDao {
     suspend fun getTaskById(taskId: Long): TaskEntity
 
     @Transaction
-    @Query("SELECT * FROM task WHERE date LIKE :date")
-    suspend
-
-    fun getTasksByDate(date: String): List<TaskEntity>
+    @Query("SELECT * FROM task WHERE date = :date")
+    suspend fun getTasksByDate(date: Int): List<TaskEntity>
 
     @Transaction
-    @Query("SELECT * FROM task WHERE date IS NOT NULL AND date !=''")
+    @Query("SELECT * FROM task WHERE date IS NOT NULL AND date != 0")
     suspend fun getTasksWithDate(): List<TaskEntity>
 
 }

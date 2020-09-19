@@ -78,7 +78,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
             val result = it.filter {
                 when (viewModel.getFilterType()) {
                     FilterType.TAG -> (it as? Task)?.tag != null
-                    FilterType.DATE -> (it as? Task)?.date != null
+                    FilterType.DATE -> (it as? Task)?.date != 0
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -144,7 +144,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
                 when(value) {
                     SortType.NAME -> (it as? Task)?.message != null
                     SortType.TAG -> (it as? Task)?.tag != null
-                    SortType.DATE -> (it as? Task)?.date != null
+                    SortType.DATE -> (it as? Task)?.date != 0
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -172,7 +172,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
             val result = it.filter {
                 when(value) {
                     FilterType.TAG -> (it as? Task)?.tag != null
-                    FilterType.DATE -> (it as? Task)?.date != null
+                    FilterType.DATE -> (it as? Task)?.date != 0
                     else -> (it as? Task)?.message != ""
                 }
             }
@@ -183,7 +183,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
 
     private fun resetTask(task: Task) {
         task.isComplete = false
-        task.date = ""
+        task.date = 0
         task.level = LevelType.NONE
         viewModel.updateTask(task)
         updateTasks()

@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Task(
     val id: Long?,
-    var date: String,
+    var date: Int,
     var message: String,
     var tag: String,
     val category: String,
@@ -17,7 +17,7 @@ data class Task(
     companion object {
         fun empty(
             id: Long? = null,
-            date: String = "",
+            date: Int = 0,
             message: String = "",
             tag: String = "",
             category: String = "",

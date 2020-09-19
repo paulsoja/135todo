@@ -1,5 +1,7 @@
 package com.paulsoia.todo135.presentation.utils
 
+import android.text.format.DateFormat
+import android.text.format.DateFormat.format
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,8 @@ import ru.terrakok.cicerone.commands.BackTo
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.Replace
+import java.text.SimpleDateFormat
+import java.util.*
 
 inline fun <reified T : Enum<T>> getEnumTypeValue(type: String): T? {
     val values = enumValues<T>()
@@ -44,3 +48,15 @@ fun navigate(): Router {
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+
+fun Int.getDateTime(): String? {
+    val cal = Calendar.getInstance(Locale.getDefault())
+    cal.timeInMillis = this.toLong() * 1000
+    return format("MM/dd/yyyy", cal).toString()
+}
+
+fun Long.getDateTime(): String? {
+    val cal = Calendar.getInstance(Locale.getDefault())
+    cal.timeInMillis = this * 1000
+    return format("MM/dd/yyyy", cal).toString()
+}

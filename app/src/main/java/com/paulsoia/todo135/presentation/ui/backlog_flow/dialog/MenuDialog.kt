@@ -57,20 +57,22 @@ class MenuDialog : BaseBottomSheetDialogFragment() {
         val date = Calendar.getInstance()
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         date.add(Calendar.DATE, day)
-        task.date = sdf.format(date.time)
+        val unixtime = date.time.time.div(1000)
+        task.date = unixtime.toInt()
         llDates.isVisible = false
         llLevels.isVisible = true
         //menuViewModel.tryUpdateTask(task)
     }
 
     private fun closeDialog(isMove: Boolean = false, taskId: Long?) {
-        menuViewModel.updateTaskResult.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        menuViewModel.updateTaskResult.observe(viewLifecycleOwner, {
             if (!it) Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
             else {
                 if (isMove) {
-                    taskId?.let { id-> menuViewModel.deleteTaskById(id).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                        Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
-                    })}
+                    taskId?.let { id-> menuViewModel.deleteTaskById(id).observe(viewLifecycleOwner,
+                        {
+                            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+                        })}
                 }
             }
             getUpdateCallback()?.onUpdateTask()

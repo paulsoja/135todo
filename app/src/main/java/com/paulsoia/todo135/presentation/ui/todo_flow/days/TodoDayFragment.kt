@@ -3,7 +3,6 @@ package com.paulsoia.todo135.presentation.ui.todo_flow.days
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -93,7 +92,7 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
         })
     }
 
-    private fun setListData() = viewModel.items.observe(viewLifecycleOwner, Observer {
+    private fun setListData() = viewModel.items.observe(viewLifecycleOwner, {
         adapter.swapData(it)
     })
 
@@ -113,7 +112,7 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
 
     override fun onUpdateTask(task: Task?) {
         task?.let { tsk ->
-            viewModel.getTaskById(tsk).observe(viewLifecycleOwner, Observer { tskRes ->
+            viewModel.getTaskById(tsk).observe(viewLifecycleOwner, { tskRes ->
                 val result = viewModel.items.value
                 result?.find {itm ->
                     (itm as? Task)?.id == tskRes.id && tskRes.id != null
@@ -129,7 +128,5 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
         }
 
     }
-
-
 
 }

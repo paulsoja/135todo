@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long?,
-    var date: String,
+    var date: Int,
     var message: String,
     var tag: String,
     var category: String,

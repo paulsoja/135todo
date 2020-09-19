@@ -9,6 +9,7 @@ import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.business.model.task.Title
+import com.paulsoia.todo135.presentation.utils.getDateTime
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,7 +47,13 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
             else -> date.add(Calendar.DATE, -100)
         }
 
-        val filterList = items.filter { (it as Task).date == sdf.format(date.time) }
+        val filterList = items.filter {
+            val ttt = date.time.time.div(1000)
+            val ddd = (it as Task).date
+            val tabDate = ttt.getDateTime()
+            val taskDate = ddd.toLong().getDateTime()
+            tabDate == taskDate
+        }
 
         val big: MutableList<TaskMarker> =
             filterList.filter { (it as Task).level == LevelType.BIG }.take(1).toMutableList()

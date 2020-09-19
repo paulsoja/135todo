@@ -45,7 +45,7 @@ class TaskDataRepository(
         }
     }
 
-    override suspend fun getTasksByDate(date: String): Result<List<Task>> {
+    override suspend fun getTasksByDate(date: Int): Result<List<Task>> {
         return try {
             Result.success(taskDao.getTasksByDate(date).map {
                 taskMapper.map(it)

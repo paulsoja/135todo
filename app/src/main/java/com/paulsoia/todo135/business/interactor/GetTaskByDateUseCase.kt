@@ -10,7 +10,7 @@ class GetTaskByDateUseCase(
     private val repository: TaskRepository
 ) : UseCase<GetTaskByDateUseCase.Params, List<Task>>() {
 
-    data class Params(val date: String)
+    data class Params(val date: Int)
 
     override suspend fun run(): Result<List<Task>> {
         if (params == null) throw IllegalArgumentException("Parameter required")

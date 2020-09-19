@@ -57,7 +57,7 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
         val date = sdf.format(System.currentTimeMillis())
         val category = ""
         val tag = ""
-        task = Task(null, "", message, tag, category, level)
+        task = Task(null, 0, message, tag, category, level)
         return task
     }
 
