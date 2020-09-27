@@ -1,18 +1,17 @@
 package com.paulsoia.todo135.presentation.ui.stats_flow.stats
 
 import android.app.DatePickerDialog
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.DatePicker
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.stats.DateRangeType
 import com.paulsoia.todo135.presentation.base.BaseFragment
-import com.paulsoia.todo135.presentation.ui.stats_flow.dialog.DateDialog
 import kotlinx.android.synthetic.main.fragment_stats.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.slybeaver.slycalendarview.SlyCalendarDialog
@@ -35,7 +34,9 @@ class StatsFragment : BaseFragment(), DatePickerDialog.OnDateSetListener, SlyCal
         updateDateRangeText()
         initListeners()
         initDate()
+        successData()
         isViewLoader()
+        showWarning()
     }
 
     private fun initCalendar() {
@@ -124,9 +125,21 @@ class StatsFragment : BaseFragment(), DatePickerDialog.OnDateSetListener, SlyCal
         viewModel.getStatsByDate(firstDate?.time, secondDate?.time)
     }
 
+    private fun successData() {
+        viewModel.successResult.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), "${it.size}", Toast.LENGTH_SHORT).show()
+        })
+    }
+
     private fun isViewLoader() {
         viewModel.isViewLoading.observe(viewLifecycleOwner, {
             progressBar.isVisible = it
+        })
+    }
+
+    private fun showWarning() {
+        viewModel.warningResult.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_LONG).show()
         })
     }
 

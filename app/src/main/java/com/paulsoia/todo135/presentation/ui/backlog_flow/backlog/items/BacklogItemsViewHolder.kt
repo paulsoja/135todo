@@ -31,7 +31,9 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
             }
             tvTitle.text = item.message
             tvTag.text = if (item.tag.isNotBlank()) item.tag else context.getString(R.string.backlog_add_tag)
-            tvDate.text = item.date.getDateTime()
+            if (item.date != 0) tvDate.text = item.date.getDateTime()
+            else tvDate.text = ""
+
             setOnClickListener { callbackTask?.invoke(item) }
             ivPush.setOnClickListener { callbackMenu?.invoke(item, adapterPosition, it) }
             tvTag.setOnClickListener { callbackTag?.invoke(item, adapterPosition) }

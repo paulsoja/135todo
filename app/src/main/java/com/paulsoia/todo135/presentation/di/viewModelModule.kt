@@ -19,5 +19,5 @@ val viewModelModule = module {
     viewModel { MenuViewModel(get(), get()) }
     viewModel { TodoDayViewModel(get(), get()) }
     viewModel { TagViewModel(get(), get(), get()) }
-    viewModel { StatsViewModel(get()) }
+    viewModel { StatsViewModel(get(), get()) }
 }
