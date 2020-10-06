@@ -2,6 +2,7 @@ package com.paulsoia.todo135.presentation.ui.todo_flow.days
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.*
@@ -12,7 +13,9 @@ import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
+import com.paulsoia.todo135.presentation.ui.todo_flow.days.dialogs.ImportTaskDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.ListViewHolder
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.TodoDayAdapter
 import kotlinx.android.synthetic.main.fragment_todo_day.*
@@ -92,22 +95,30 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
         })
     }
 
-    private fun setListData() = viewModel.items.observe(viewLifecycleOwner, {
-        adapter.swapData(it)
-    })
+    private fun setListData() = viewModel.items.observe(viewLifecycleOwner, { adapter.swapData(it) })
 
     override fun onCheckboxClick(task: Task) = viewModel.updateTask(task)
 
     override fun onDragItem(viewHolder: RecyclerView.ViewHolder) {
-        if (viewHolder is ListViewHolder) {
-            touchHelper.startDrag(viewHolder)
-        }
+        if (viewHolder is ListViewHolder) { touchHelper.startDrag(viewHolder) }
     }
 
     override fun onItemClick(task: Task) {
         EditTaskDialog.newInstance(task).apply {
             setTargetFragment(this@TodoDayFragment, 0)
         }.show(parentFragmentManager, "edit")
+    }
+
+    override fun onEmptyItemClick() {
+        NewTaskDialog.newInstance().apply {
+            setTargetFragment(this@TodoDayFragment, 0)
+        }.show(parentFragmentManager, "create")
+    }
+
+    private fun openImportDialog() {
+        ImportTaskDialog.newInstance().apply {
+            setTargetFragment(this@TodoDayFragment, 0)
+        }.show(parentFragmentManager, "import")
     }
 
     override fun onUpdateTask(task: Task?) {
@@ -122,11 +133,8 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
                     adapter.updateItemById(tm)
                 }
             })
+            callback?.invoke(tsk)
         }
-        task?.let {
-            callback?.invoke(it)
-        }
-
     }
 
 }

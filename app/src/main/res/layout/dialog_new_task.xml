@@ -8,11 +8,22 @@
     android:orientation="vertical"
     android:padding="4dp">
 
+    <TextView
+        android:id="@+id/tvImport"
+        android:background="@color/grey_light"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="4dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/todo_import_from_backlog" />
+
     <EditText
         android:id="@+id/tvTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvImport"
         android:autofillHints="new task"
         android:hint="@string/todo_new_task"
         android:inputType="textLongMessage" />
@@ -21,6 +32,7 @@
         android:id="@+id/llLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/tvTask"
         android:orientation="horizontal">
 
@@ -61,15 +73,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tvSave"
-        android:background="@color/grey"
+        android:id="@+id/tvCreate"
+        android:background="@color/grey_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/llLevel"
         android:layout_margin="4dp"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/text_save" />
+        android:text="@string/text_create" />
 
     <ProgressBar
         android:id="@+id/loader"

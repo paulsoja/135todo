@@ -6,6 +6,7 @@
     <string name="text_medium">Medium</string>
     <string name="text_small">Small</string>
     <string name="text_save">Save</string>
+    <string name="text_create">Create</string>
     <string name="text_ok">OK</string>
     <string name="text_cancel">Cancel</string>
 
@@ -27,6 +28,7 @@
     <string name="todo_medium_hint">medium</string>
     <string name="todo_small_hint">small</string>
     <string name="todo_empty_text">empty</string>
+    <string name="todo_import_from_backlog">Tap to import from the incoming</string>
 
     <!--backlog-->
     <string name="backlog_filter_all">clear all</string>

@@ -14,6 +14,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
         var callbackCheckbox: ((task: Task) -> Unit)? = null
         var callbackDrag: ((viewHolder: RecyclerView.ViewHolder) -> Unit)? = null
         var callbackItem: ((task: Task) -> Unit)? = null
+        var callbackEmptyClick: (() -> Unit)? = null
     }
 
     override fun bind(item: Task) {
@@ -35,7 +36,10 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
                         tvTask.paintFlags = if (it.isComplete) Paint.STRIKE_THRU_TEXT_FLAG else 0
                     })
                 }
-            } ?: kotlin.run { checkbox.isEnabled = false }
+            } ?: run {
+                checkbox.isEnabled = false
+                setOnClickListener { callbackEmptyClick?.invoke() }
+            }
 
             /*var oldText = ""
             tvTask.doOnTextChanged { text, start, before, count ->
