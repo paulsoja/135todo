@@ -20,13 +20,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:drawablePadding="16dp"
-        android:text="@string/backlog_all_task"
+        android:text="@string/navigate_incoming"
         app:drawableStartCompat="@drawable/ic_all_list" />
 
     <ImageView
         android:id="@+id/ivSort"
         android:layout_width="@dimen/default_ripple_btn_size"
         android:layout_height="@dimen/default_ripple_btn_size"
+        android:visibility="gone"
         android:background="@drawable/bg_default_oval_ripple"
         android:layout_margin="@dimen/default_half_margin"
         android:padding="@dimen/default_half_margin"
@@ -41,6 +42,7 @@
         android:layout_width="@dimen/default_ripple_btn_size"
         android:layout_height="@dimen/default_ripple_btn_size"
         android:layout_margin="@dimen/default_half_margin"
+        android:visibility="gone"
         android:background="@drawable/bg_default_oval_ripple"
         android:padding="@dimen/default_half_margin"
         app:layout_constraintEnd_toStartOf="@+id/ivSort"

@@ -29,6 +29,7 @@
     <string name="todo_small_hint">small</string>
     <string name="todo_empty_text">empty</string>
     <string name="todo_import_from_backlog">Tap to import from the incoming</string>
+    <string name="todo_import_title">Choose task</string>
 
     <!--backlog-->
     <string name="backlog_filter_all">clear all</string>
@@ -55,6 +56,7 @@
 
     <!--settings-->
     <string name="settings_title">Settings</string>
+    <string name="settings_coming_soon">Coming soon</string>
     <string name="settings_stats_title">Set up statistics</string>
     <string name="settings_stats_desc">Set up your statistic preferences</string>
     <string name="settings_reminders_title">Reminders</string>

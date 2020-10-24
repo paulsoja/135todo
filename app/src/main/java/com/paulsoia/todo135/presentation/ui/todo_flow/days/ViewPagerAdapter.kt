@@ -24,6 +24,7 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
         set(value) {
             field = value
             fragment.callback = { task -> callback?.onUpdatePage() }
+            //fragment.positionListener = { -> callback?.getPosition() }
         }
 
     fun swapData(list: List<TaskMarker>) {
@@ -81,11 +82,14 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
         val statTitleMedium = medium.filter { (it as Task).isComplete }.size
         val statTitleSmall = small.filter { (it as Task).isComplete }.size
 
-        result.add(Title("big $statTitleBig / 1"))
+        //result.add(Title("big $statTitleBig / 1"))
+        result.add(Title(context.getString(R.string.text_big)))
         result.addAll(big)
-        result.add(Title("medium $statTitleMedium / 3"))
+        //result.add(Title("medium $statTitleMedium / 3"))
+        result.add(Title(context.getString(R.string.text_medium)))
         result.addAll(medium)
-        result.add(Title("small $statTitleSmall / 5"))
+        //result.add(Title("small $statTitleSmall / 5"))
+        result.add(Title(context.getString(R.string.text_small)))
         result.addAll(small)
 
         return result
@@ -104,6 +108,7 @@ class ViewPagerAdapter(fm: FragmentManager, private val context: Context) :
 
     interface UpdatePageCallback {
         fun onUpdatePage()
+        fun getPosition()
     }
 
 }

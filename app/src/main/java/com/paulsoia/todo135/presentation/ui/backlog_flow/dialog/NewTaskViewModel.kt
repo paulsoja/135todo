@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.SaveTaskUseCase
+import com.paulsoia.todo135.business.interactor.SaveTodoTaskUseCase
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber
 
 class NewTaskViewModel(
-    private val saveTaskUseCase: SaveTaskUseCase
+    private val saveTaskUseCase: SaveTaskUseCase,
+    private val saveTodoTaskUseCase: SaveTodoTaskUseCase
 ) : ViewModel() {
 
     internal val isViewLoading = MutableLiveData<Boolean>()

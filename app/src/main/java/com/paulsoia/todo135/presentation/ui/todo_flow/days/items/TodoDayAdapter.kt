@@ -23,7 +23,7 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     set(value) {
         field = value
         listViewHolder.callbackCheckbox = { task -> callback?.onCheckboxClick(task) }
-        listViewHolder.callbackDrag = { vh -> callback?.onDragItem(vh) }
+        //listViewHolder.callbackDrag = { vh -> callback?.onDragItem(vh) }
         listViewHolder.callbackItem = { task -> callback?.onItemClick(task) }
         listViewHolder.callbackEmptyClick = { callback?.onEmptyItemClick() }
     }
@@ -81,7 +81,7 @@ class TodoDayAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface TaskListener {
         fun onCheckboxClick(task: Task)
-        fun onDragItem(viewHolder: RecyclerView.ViewHolder)
+        //fun onDragItem(viewHolder: RecyclerView.ViewHolder)
         fun onItemClick(task: Task)
         fun onEmptyItemClick()
     }

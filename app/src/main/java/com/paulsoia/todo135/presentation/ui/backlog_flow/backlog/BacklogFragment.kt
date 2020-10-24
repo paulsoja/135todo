@@ -87,7 +87,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     private fun updateTasks() {
-        viewModel.resultUpdate.observe(viewLifecycleOwner, Observer {
+        viewModel.resultUpdate.observe(viewLifecycleOwner, {
             if (it) viewModel.getAllTasks()
         })
     }
@@ -139,7 +139,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     private fun sortByValue(value: SortType) {
-        viewModel.result.observe(viewLifecycleOwner, Observer {
+        viewModel.result.observe(viewLifecycleOwner, {
             val result = it.filter {
                 when(value) {
                     SortType.NAME -> (it as? Task)?.message != null
@@ -168,7 +168,7 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     private fun filterByValue(value: FilterType) {
-        viewModel.result.observe(viewLifecycleOwner, Observer {
+        viewModel.result.observe(viewLifecycleOwner, {
             val result = it.filter {
                 when(value) {
                     FilterType.TAG -> (it as? Task)?.tag != null

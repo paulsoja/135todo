@@ -4,9 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.paulsoia.todo135.business.interactor.GetTasksWithDateUseCase
 import com.paulsoia.todo135.business.interactor.SaveTaskUseCase
+import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
 import com.paulsoia.todo135.business.model.task.Task
+import com.paulsoia.todo135.business.model.task.TaskMarker
 
 class TodoViewModel(
+    private val updateTaskByIdUseCase: UpdateTaskByIdUseCase,
     private val saveTaskUseCase: SaveTaskUseCase,
     private val getTasksWithDateUseCase: GetTasksWithDateUseCase
 ) : ViewModel() {
@@ -14,7 +17,8 @@ class TodoViewModel(
     internal val isViewLoading = MutableLiveData<Boolean>()
     internal val warningResult = MutableLiveData<String>()
     internal val resultSaveTask = MutableLiveData<Boolean>()
-    internal val resultTasks = MutableLiveData<List<Task>>()
+    internal val resultTasks = MutableLiveData<Triple<List<TaskMarker>, List<TaskMarker>, List<TaskMarker>>>()
+    private val resultUpdate = MutableLiveData<Boolean>()
 
     internal fun saveTask(task: Task) {
         isViewLoading.value = true
@@ -29,19 +33,26 @@ class TodoViewModel(
         }
     }
 
-    internal fun getTaskWithDate(): MutableLiveData<List<Task>> {
-        val taskItems = MutableLiveData<List<Task>>()
+    internal fun getTaskWithDate() {
         isViewLoading.value = true
         getTasksWithDateUseCase {
             it.onSuccess {
                 resultTasks.value = it
-                taskItems.value = it
             }.onFailure {
                 warningResult.value = it.message
             }
             isViewLoading.value = false
         }
-        return taskItems
+    }
+
+    internal fun updateTask(task: Task) {
+        updateTaskByIdUseCase(UpdateTaskByIdUseCase.Params(task)) {
+            it.onSuccess {
+                resultUpdate.value = true
+            }.onFailure {
+                resultUpdate.value = false
+            }
+        }
     }
 
 }

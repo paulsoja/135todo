@@ -52,6 +52,11 @@ class BacklogItemsViewHolder(view: View) : BaseViewHolder<Task>(view) {
                 }
                 callbackCheckbox?.invoke(item, adapterPosition)
             }
+            checkbox.isVisible = false
+            tvTag.isVisible = false
+            tvDate.isVisible = false
+            tvLevel.isVisible = false
+            ivPush.isVisible = false
         }
     }
 }

@@ -53,4 +53,5 @@
 	<dimen name="main_chain_height">36dp</dimen>
 	<dimen name="catalog_divider_padding">72dp</dimen>
 	<dimen name="pager_tab_height">32dp</dimen>
+	<dimen name="default_toolbar_size">56dp</dimen>
 </resources>

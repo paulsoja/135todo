@@ -8,10 +8,9 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="@dimen/default_tiny_margin"
-        android:paddingBottom="@dimen/default_tiny_margin"
-        android:textSize="24sp"
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_marginStart="@dimen/default_half_margin"
+        android:textSize="@dimen/large_title_text_size"
         android:text="@string/text_big" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

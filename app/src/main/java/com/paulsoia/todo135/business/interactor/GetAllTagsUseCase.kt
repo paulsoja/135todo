@@ -1,8 +1,8 @@
 package com.paulsoia.todo135.business.interactor
 
+import com.paulsoia.todo135.business.interactor.base.UseCase
 import com.paulsoia.todo135.business.model.tag.TagMarker
 import com.paulsoia.todo135.business.repository.TaskRepository
-import global.zakaz.stockman.domain.interactor.base.UseCase
 import java.lang.Exception
 
 class GetAllTagsUseCase(

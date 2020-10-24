@@ -38,14 +38,15 @@ class SettingsFragment : BaseFragment() {
                 setTargetFragment(this@SettingsFragment, 0)
             }.show(parentFragmentManager, "name")
         }
-        holderStats.setOnClickListener { }
-        holderReminder.setOnClickListener { }
-        holderWidget.setOnClickListener { }
-        holderTheme.setOnClickListener {
+        //for next release
+        //holderStats.setOnClickListener { }
+        //holderReminder.setOnClickListener { }
+        //holderWidget.setOnClickListener { }
+        /*holderTheme.setOnClickListener {
             ThemeDialog.newInstance().apply {
                 setTargetFragment(this@SettingsFragment, 0)
             }.show(parentFragmentManager, "theme")
-        }
+        }*/
         holderAboutMethodology.setOnClickListener { }
         holderAboutApp.setOnClickListener { }
         holderLogout.setOnClickListener { }

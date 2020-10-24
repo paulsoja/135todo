@@ -1,4 +1,4 @@
-package global.zakaz.stockman.domain.interactor.base
+package com.paulsoia.todo135.business.interactor.base
 
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.Dispatchers

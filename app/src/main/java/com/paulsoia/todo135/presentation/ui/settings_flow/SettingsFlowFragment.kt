@@ -9,8 +9,7 @@ import com.paulsoia.todo135.presentation.utils.setLaunchScreen
 class SettingsFlowFragment : FlowFragment() {
 
     companion object {
-        fun newInstance() =
-            SettingsFlowFragment()
+        fun newInstance() = SettingsFlowFragment()
     }
 
     override val layoutRes: Int = R.layout.layout_container

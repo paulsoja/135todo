@@ -36,6 +36,8 @@
         app:layout_constraintEnd_toStartOf="@+id/ivPush"
         android:paddingTop="@dimen/default_small_margin"
         android:paddingBottom="@dimen/default_small_margin"
+        android:paddingStart="@dimen/default_small_margin"
+        android:paddingEnd="@dimen/default_small_margin"
         app:layout_constraintStart_toEndOf="@+id/checkbox"
         tools:text="Long long message" />
 

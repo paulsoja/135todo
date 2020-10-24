@@ -2,26 +2,21 @@ package com.paulsoia.todo135.presentation.ui.todo_flow.days
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
-import com.paulsoia.todo135.presentation.ui.todo_flow.days.dialogs.ImportTaskDialog
-import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.ListViewHolder
+import com.paulsoia.todo135.presentation.ui.todo_flow.days.import_task.ImportDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.TodoDayAdapter
 import kotlinx.android.synthetic.main.fragment_todo_day.*
 import org.koin.android.ext.android.inject
 
-class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBacklogCallback {
+class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener,
+    NewTaskDialog.OpenImportCallback, ImportDialog.GetTaskAndCloseListener {
 
     companion object {
         private const val ITEMS = "items"
@@ -31,8 +26,6 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
         fun newInstance(items: List<TaskMarker>) = TodoDayFragment()
             .apply { arguments = bundleOf(ITEMS to items) }
     }
-
-    private val touchHelper by lazy { switchItems() }
 
     private val viewModel: TodoDayViewModel by inject()
 
@@ -45,87 +38,32 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
         viewModel.items.value = arguments?.getParcelableArrayList<Task>(ITEMS)
         initRecyclerView()
         setListData()
+        openImport()
     }
 
     private fun initRecyclerView() {
         adapter.callback = this
         rvTodoDay.layoutManager = LinearLayoutManager(requireContext())
         rvTodoDay.adapter = adapter
-        touchHelper.attachToRecyclerView(rvTodoDay)
-    }
-
-    private fun switchItems(): ItemTouchHelper {
-        return ItemTouchHelper(object : SimpleCallback(UP or DOWN, 0) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                val adapter = recyclerView.adapter as TodoDayAdapter
-                if (viewHolder is ListViewHolder && target is ListViewHolder) {
-                    val from = viewHolder.adapterPosition
-                    val to = target.adapterPosition
-                    adapter.moveItem(from, to)
-                    adapter.notifyItemMoved(from, to)
-                    return true
-                }
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
-
-            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                super.onSelectedChanged(viewHolder, actionState)
-                if (actionState == ACTION_STATE_DRAG) {
-                    if (viewHolder is ListViewHolder) {
-                        viewHolder.itemView.alpha = 0.5f
-                    }
-                }
-            }
-
-            override fun clearView(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder
-            ) {
-                super.clearView(recyclerView, viewHolder)
-                if (viewHolder is ListViewHolder) {
-                    viewHolder.itemView.alpha = 1.0f
-                }
-            }
-        })
     }
 
     private fun setListData() = viewModel.items.observe(viewLifecycleOwner, { adapter.swapData(it) })
 
     override fun onCheckboxClick(task: Task) = viewModel.updateTask(task)
 
-    override fun onDragItem(viewHolder: RecyclerView.ViewHolder) {
-        if (viewHolder is ListViewHolder) { touchHelper.startDrag(viewHolder) }
-    }
-
     override fun onItemClick(task: Task) {
-        EditTaskDialog.newInstance(task).apply {
-            setTargetFragment(this@TodoDayFragment, 0)
-        }.show(parentFragmentManager, "edit")
-    }
-
-    override fun onEmptyItemClick() {
-        NewTaskDialog.newInstance().apply {
-            setTargetFragment(this@TodoDayFragment, 0)
-        }.show(parentFragmentManager, "create")
-    }
-
-    private fun openImportDialog() {
-        ImportTaskDialog.newInstance().apply {
-            setTargetFragment(this@TodoDayFragment, 0)
-        }.show(parentFragmentManager, "import")
+        fragmentManager?.let {
+            EditTaskDialog.newInstance(task).apply {
+                setTargetFragment(this@TodoDayFragment, 1)
+            }.show(it, "edit")
+        }
     }
 
     override fun onUpdateTask(task: Task?) {
         task?.let { tsk ->
             viewModel.getTaskById(tsk).observe(viewLifecycleOwner, { tskRes ->
                 val result = viewModel.items.value
-                result?.find {itm ->
+                result?.find { itm ->
                     (itm as? Task)?.id == tskRes.id && tskRes.id != null
                 }?.let { tm ->
                     (tm as? Task)?.isComplete = task.isComplete
@@ -135,6 +73,36 @@ class TodoDayFragment : BaseFragment(), TodoDayAdapter.TaskListener, UpdateBackl
             })
             callback?.invoke(tsk)
         }
+    }
+
+    private fun openNewTaskDialog(taskMessage: String? = null) {
+        fragmentManager?.let {
+            NewTaskDialog.newInstance(taskMessage).apply {
+                setTargetFragment(this@TodoDayFragment, 2)
+            }.show(it, "create")
+        }
+    }
+
+    override fun onEmptyItemClick() {
+        openNewTaskDialog()
+    }
+
+    private fun openImport() {
+        viewModel.tasks.observe(viewLifecycleOwner, { list ->
+            fragmentManager?.let {
+                ImportDialog.newInstance(list).apply {
+                    setTargetFragment(this@TodoDayFragment, 3)
+                }.show(it, "import")
+            }
+        })
+    }
+
+    override fun onImportClicked() {
+        viewModel.getAllTasks()
+    }
+
+    override fun closeDialog(task: Task) {
+        openNewTaskDialog(task.message)
     }
 
 }

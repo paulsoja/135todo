@@ -1,4 +1,4 @@
-package com.paulsoia.todo135.presentation.ui.todo_flow.days.dialogs.items
+package com.paulsoia.todo135.presentation.ui.todo_flow.days.import_task
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +10,16 @@ import com.paulsoia.todo135.presentation.utils.inflate
 
 class ImportAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    private var items: MutableList<TaskMarker> = mutableListOf()
+    private val items = mutableListOf<TaskMarker>()
+    private val importTaskViewHolder = ImportTaskViewHolder
 
-    fun swapData(list: List<TaskMarker>) {
+    internal var callback: TaskListener? = null
+        set(value) {
+            field = value
+            importTaskViewHolder.callbackItem = { task -> callback?.onTaskClicked(task) }
+        }
+
+    internal fun swapData(list: List<TaskMarker>) {
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
@@ -28,5 +35,9 @@ class ImportAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     }
 
     override fun getItemCount() = items.size
+
+    interface TaskListener {
+        fun onTaskClicked(task: Task)
+    }
 
 }

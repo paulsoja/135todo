@@ -28,15 +28,14 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         etMessage.requestFocus()
         arguments?.let {
-            viewModel.message.value = it.takeIf { it.containsKey(TASK_ARG) }
-                ?.getParcelable(TASK_ARG)
+            viewModel.message.value = it.takeIf { it.containsKey(TASK_ARG) }?.getParcelable(TASK_ARG)
                 ?: throw IllegalArgumentException("`${Task::class.java.simpleName}` required")
         }
         initViews()
     }
 
     private fun initViews() {
-        viewModel.message.observe(viewLifecycleOwner, Observer {
+        viewModel.message.observe(viewLifecycleOwner, {
             etMessage.setText(it.message)
         })
         btnEdit.setOnClickListener {
@@ -44,7 +43,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
             val task = viewModel.message.value
             task?.message = message
             task?.let { tsk ->
-                viewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, Observer {
+                viewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, {
                     if (it) { getUpdateCallback()?.onUpdateTask(tsk) }
                 })
             }

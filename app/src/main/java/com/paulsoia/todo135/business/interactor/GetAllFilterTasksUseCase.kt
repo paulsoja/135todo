@@ -1,10 +1,9 @@
 package com.paulsoia.todo135.business.interactor
 
+import com.paulsoia.todo135.business.interactor.base.UseCase
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
-import com.paulsoia.todo135.business.model.task.Title
 import com.paulsoia.todo135.business.repository.TaskRepository
-import global.zakaz.stockman.domain.interactor.base.UseCase
 import java.lang.Exception
 import java.sql.SQLException
 
@@ -25,9 +24,9 @@ class GetAllFilterTasksUseCase(
         val result = mutableListOf<TaskMarker>()
 
         items.map {
-            result.add(Title("todo"))
+            //result.add(Title("to do"))
             result.addAll(it.filter { !it.isComplete })
-            result.add(Title("complete"))
+            //result.add(Title("complete"))
             result.addAll(it.filter { it.isComplete })
         }
 
