@@ -5,19 +5,19 @@ import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.business.model.task.TaskMarker
 import com.paulsoia.todo135.business.model.task.Title
-import com.paulsoia.todo135.business.repository.TaskRepository
+import com.paulsoia.todo135.business.repository.TaskTodoRepository
 import com.paulsoia.todo135.presentation.utils.getDateTime
 import java.lang.Exception
 import java.sql.SQLException
 import java.util.*
 
 class GetTasksWithDateUseCase(
-    private val repository: TaskRepository
+    private val repository: TaskTodoRepository
 ) : UseCase<UseCase.None, Triple<List<TaskMarker>, List<TaskMarker>, List<TaskMarker>>>() {
 
     override suspend fun run(): Result<Triple<List<TaskMarker>, List<TaskMarker>, List<TaskMarker>>> {
         try {
-            repository.getTasksWithDate().onSuccess {
+            repository.getAllTasks().onSuccess {
                 return Result.success(separateTasks(it))
             }.onFailure {
                 return Result.failure(it)
@@ -47,13 +47,17 @@ class GetTasksWithDateUseCase(
 
         items.forEach {
             when(it.date.toLong().getDateTime()) {
-                todayDate -> { if (today.size < 1) today.add(it) }
-                yesterdayDate -> { if (yesterday.size < 3) yesterday.add(it) }
-                tomorrowDate -> { if (tomorrow.size < 5) tomorrow.add(it) }
+                todayDate -> { today.add(it) }
+                yesterdayDate -> { if (yesterday.size < 9) yesterday.add(it) }
+                tomorrowDate -> { if (tomorrow.size < 9) tomorrow.add(it) }
                 else -> {}
             }
         }
 
+        return Triple(yesterdayCollect(yesterday), todayCollect(today), tomorrowCollect(tomorrow))
+    }
+
+    private fun yesterdayCollect(yesterday: MutableList<TaskMarker>): MutableList<TaskMarker> {
         val yesterdayResult = mutableListOf<TaskMarker>()
         yesterdayResult.add(Title("Big"))
         yesterday.find { (it as Task).level == LevelType.BIG }.let {
@@ -64,7 +68,7 @@ class GetTasksWithDateUseCase(
         yesterday.filter { (it as Task).level == LevelType.MEDIUM }.let {
             if (it.size < 3) {
                 yesterdayResult.addAll(it)
-                for (x in it.size until 3) yesterdayResult.add(Task.empty(level = LevelType.SMALL))
+                for (x in it.size until 3) yesterdayResult.add(Task.empty(level = LevelType.MEDIUM))
             }
             if (it.size >= 3) {
                 yesterdayResult.addAll(it.take(3))
@@ -80,8 +84,67 @@ class GetTasksWithDateUseCase(
                 yesterdayResult.addAll(it.take(5))
             }
         }
+        return yesterdayResult
+    }
 
-        return Triple(yesterdayResult, today, tomorrow)
+    private fun todayCollect(today: MutableList<TaskMarker>): MutableList<TaskMarker> {
+        val todayResult = mutableListOf<TaskMarker>()
+        todayResult.add(Title("Big"))
+        today.find { (it as Task).level == LevelType.BIG }.let {
+            if (it is Task) todayResult.add(it)
+            else todayResult.add(Task.empty())
+        }
+        todayResult.add(Title("Medium"))
+        today.filter { (it as Task).level == LevelType.MEDIUM }.let {
+            if (it.size < 3) {
+                todayResult.addAll(it)
+                for (x in it.size until 3) todayResult.add(Task.empty(level = LevelType.MEDIUM))
+            }
+            if (it.size >= 3) {
+                todayResult.addAll(it.take(3))
+            }
+        }
+        todayResult.add(Title("Small"))
+        today.filter { (it as Task).level == LevelType.SMALL }.let {
+            if (it.size < 5) {
+                todayResult.addAll(it)
+                for (x in it.size until 5) todayResult.add(Task.empty(level = LevelType.SMALL))
+            }
+            if (it.size >= 5) {
+                todayResult.addAll(it.take(5))
+            }
+        }
+        return todayResult
+    }
+
+    private fun tomorrowCollect(tomorrow: MutableList<TaskMarker>): MutableList<TaskMarker> {
+        val tomorrowResult = mutableListOf<TaskMarker>()
+        tomorrowResult.add(Title("Big"))
+        tomorrow.find { (it as Task).level == LevelType.BIG }.let {
+            if (it is Task) tomorrowResult.add(it)
+            else tomorrowResult.add(Task.empty())
+        }
+        tomorrowResult.add(Title("Medium"))
+        tomorrow.filter { (it as Task).level == LevelType.MEDIUM }.let {
+            if (it.size < 3) {
+                tomorrowResult.addAll(it)
+                for (x in it.size until 3) tomorrowResult.add(Task.empty(level = LevelType.MEDIUM))
+            }
+            if (it.size >= 3) {
+                tomorrowResult.addAll(it.take(3))
+            }
+        }
+        tomorrowResult.add(Title("Small"))
+        tomorrow.filter { (it as Task).level == LevelType.SMALL }.let {
+            if (it.size < 5) {
+                tomorrowResult.addAll(it)
+                for (x in it.size until 5) tomorrowResult.add(Task.empty(level = LevelType.SMALL))
+            }
+            if (it.size >= 5) {
+                tomorrowResult.addAll(it.take(5))
+            }
+        }
+        return tomorrowResult
     }
 
 }

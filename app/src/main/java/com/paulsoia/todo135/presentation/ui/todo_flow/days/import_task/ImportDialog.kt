@@ -48,13 +48,13 @@ class ImportDialog : BaseBottomSheetDialogFragment(), ImportAdapter.TaskListener
     }
 
     override fun onTaskClicked(task: Task) {
-        getTaskCallback()?.closeDialog(task).also { dismiss() }
+        getTaskCallback()?.closeImportDialog(task).also { dismiss() }
     }
 
     private fun getTaskCallback(): GetTaskAndCloseListener? = targetFragment as? GetTaskAndCloseListener
 
     interface GetTaskAndCloseListener {
-        fun closeDialog(task: Task)
+        fun closeImportDialog(task: Task)
     }
 
 }

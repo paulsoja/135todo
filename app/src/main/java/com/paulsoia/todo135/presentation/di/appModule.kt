@@ -9,4 +9,5 @@ val appModule = module {
 
     single { get<AppDatabase>().getTasksDao() }
     single { get<AppDatabase>().getTagsDao() }
+    single { get<AppDatabase>().getTasksTodoDao() }
 }

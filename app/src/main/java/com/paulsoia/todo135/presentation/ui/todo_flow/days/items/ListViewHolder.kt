@@ -14,7 +14,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
         var callbackCheckbox: ((task: Task) -> Unit)? = null
         var callbackDrag: ((viewHolder: RecyclerView.ViewHolder) -> Unit)? = null
         var callbackItem: ((task: Task) -> Unit)? = null
-        var callbackEmptyClick: (() -> Unit)? = null
+        var callbackEmptyClick: ((position: Int) -> Unit)? = null
     }
 
     override fun bind(item: Task) {
@@ -38,7 +38,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
                 }
             } ?: run {
                 checkbox.isEnabled = false
-                setOnClickListener { callbackEmptyClick?.invoke() }
+                setOnClickListener { callbackEmptyClick?.invoke(adapterPosition) }
             }
 
             /*var oldText = ""

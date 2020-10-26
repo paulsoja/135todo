@@ -9,7 +9,8 @@ import com.paulsoia.todo135.R
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
-import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.NewTaskDialog
+import com.paulsoia.todo135.presentation.ui.todo_flow.days.NewTaskTodoDialog
+import com.paulsoia.todo135.presentation.ui.todo_flow.days.import_task.ImportDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.TodoDayAdapter
 import kotlinx.android.synthetic.main.fragment_todo.*
 import kotlinx.android.synthetic.main.toolbar_todo.*
@@ -17,7 +18,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener /*ViewPagerAdapter.UpdatePageCallback*/ {
+class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDialog.OpenImportCallback,
+    ImportDialog.GetTaskAndCloseListener {
 
     companion object {
         fun newInstance() = TodoFragment()
@@ -27,6 +29,7 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener /*ViewPagerAdap
 
     override val layoutRes: Int = R.layout.fragment_todo
     private val adapter = TodoDayAdapter()
+    private var positionClicked: Int = -1
 
     private var items = listOf<Task>()
 
@@ -39,6 +42,8 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener /*ViewPagerAdap
         ivSwap.setOnClickListener { Toast.makeText(requireContext(), "swap", Toast.LENGTH_SHORT).show() }
         tvToday.text = getDate(1, true)
         getTasks()
+        openImport()
+        updateList()
     }
 
     private fun initRecyclerView() {
@@ -51,10 +56,11 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener /*ViewPagerAdap
         tabs.addTab(tabs.newTab().setText(getString(R.string.text_yesterday)))
         tabs.addTab(tabs.newTab().setText(getString(R.string.text_today)))
         tabs.addTab(tabs.newTab().setText(getString(R.string.text_tomorrow)))
+        tabs.getTabAt(1)?.select()
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val currentTab = tab?.text
-                Toast.makeText(requireContext(), "$currentTab", Toast.LENGTH_SHORT).show()
+                val currentTab = tab?.position
+                getTasks(currentTab ?: 1)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -77,9 +83,13 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener /*ViewPagerAdap
         return sdf.format(date.time)
     }
 
-    private fun getTasks() {
+    private fun getTasks(tabPosition: Int = 1) {
         viewModel.resultTasks.observe(viewLifecycleOwner, {
-            adapter.swapData(it.first)
+            when (tabPosition) {
+                0 -> adapter.swapData(it.first)
+                1 -> adapter.swapData(it.second)
+                2 -> adapter.swapData(it.third)
+            }
         })
     }
 
@@ -99,12 +109,56 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener /*ViewPagerAdap
         }
     }
 
-    override fun onEmptyItemClick() {
+    override fun onEmptyItemClick(position: Int) {
+        positionClicked = position
         fragmentManager?.let {
-            NewTaskDialog.newInstance().apply {
+            NewTaskTodoDialog.newInstance().apply {
                 setTargetFragment(this@TodoFragment, 2)
             }.show(it, "create")
         }
+    }
+
+    private fun openImport() {
+        viewModel.tasks.observe(viewLifecycleOwner, { list ->
+            fragmentManager?.let {
+                ImportDialog.newInstance(list).apply {
+                    setTargetFragment(this@TodoFragment, 3)
+                }.show(it, "import")
+            }
+        })
+    }
+
+    override fun onImportClicked() {
+        viewModel.getAllTasks()
+    }
+
+    override fun onUpdateTask(task: Task?) {
+
+    }
+
+    override fun closeImportDialog(task: Task) {
+        fragmentManager?.let {
+            NewTaskTodoDialog.newInstance(task, positionClicked).apply {
+                setTargetFragment(this@TodoFragment, 2)
+            }.show(it, "create")
+        }
+        /*run {
+            val date = Calendar.getInstance()
+            val unixtime = date.time.time.div(1000)
+            task.date = unixtime.toInt()
+            task.level = when(positionClicked) {
+                1 -> LevelType.BIG
+                3, 4, 5 -> LevelType.MEDIUM
+                7, 8, 9, 10, 11 -> LevelType.SMALL
+                else -> throw IllegalArgumentException("Wrong index in ImportAdapter")
+            }
+        }.also { viewModel.updateTask(task) }*/
+    }
+
+    private fun updateList() {
+        viewModel.resultSaveTask.observe(viewLifecycleOwner, {
+            if (it) { viewModel.getTaskWithDate() }
+        })
     }
 
 }

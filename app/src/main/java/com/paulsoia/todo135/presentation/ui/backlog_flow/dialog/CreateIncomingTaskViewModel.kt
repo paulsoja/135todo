@@ -8,7 +8,7 @@ import com.paulsoia.todo135.business.interactor.SaveTodoTaskUseCase
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber
 
-class NewTaskViewModel(
+class CreateIncomingTaskViewModel(
     private val saveTaskUseCase: SaveTaskUseCase,
     private val saveTodoTaskUseCase: SaveTodoTaskUseCase
 ) : ViewModel() {

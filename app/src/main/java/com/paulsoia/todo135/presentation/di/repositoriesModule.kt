@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val repositoriesModule = module {
     factory<TaskRepository> { TaskDataRepository(get(), get(), get(), get()) }
-    factory<TaskTodoRepository> { TaskTodoDataRepository() }
+    factory<TaskTodoRepository> { TaskTodoDataRepository(get(), get()) }
 }

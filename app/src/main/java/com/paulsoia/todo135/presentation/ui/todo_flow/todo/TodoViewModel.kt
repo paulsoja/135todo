@@ -2,6 +2,7 @@ package com.paulsoia.todo135.presentation.ui.todo_flow.todo
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.paulsoia.todo135.business.interactor.GetAllTasksUseCase
 import com.paulsoia.todo135.business.interactor.GetTasksWithDateUseCase
 import com.paulsoia.todo135.business.interactor.SaveTaskUseCase
 import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
@@ -11,7 +12,8 @@ import com.paulsoia.todo135.business.model.task.TaskMarker
 class TodoViewModel(
     private val updateTaskByIdUseCase: UpdateTaskByIdUseCase,
     private val saveTaskUseCase: SaveTaskUseCase,
-    private val getTasksWithDateUseCase: GetTasksWithDateUseCase
+    private val getTasksWithDateUseCase: GetTasksWithDateUseCase,
+    private val getAllTasksUseCase: GetAllTasksUseCase
 ) : ViewModel() {
 
     internal val isViewLoading = MutableLiveData<Boolean>()
@@ -19,6 +21,7 @@ class TodoViewModel(
     internal val resultSaveTask = MutableLiveData<Boolean>()
     internal val resultTasks = MutableLiveData<Triple<List<TaskMarker>, List<TaskMarker>, List<TaskMarker>>>()
     private val resultUpdate = MutableLiveData<Boolean>()
+    internal val tasks = MutableLiveData<List<Task>>()
 
     internal fun saveTask(task: Task) {
         isViewLoading.value = true
@@ -30,6 +33,16 @@ class TodoViewModel(
                 warningResult.value = it.message
             }
             isViewLoading.value = false
+        }
+    }
+
+    internal fun getAllTasks() {
+        getAllTasksUseCase {
+            it.onSuccess {
+                tasks.value = it
+            }.onFailure {
+                val trtr = it
+            }
         }
     }
 

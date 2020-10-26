@@ -1,4 +1,4 @@
-package com.paulsoia.todo135.presentation.ui.backlog_flow.dialog
+package com.paulsoia.todo135.presentation.ui.todo_flow.days
 
 import android.os.Bundle
 import android.view.View
@@ -14,17 +14,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewTaskDialog : BaseBottomSheetDialogFragment() {
+class NewTaskTodoDialog : BaseBottomSheetDialogFragment() {
 
-    private val viewModel: NewTaskViewModel by viewModel()
+    private val viewModel: NewTaskTodoViewModel by viewModel()
 
     var listener: OpenImportCallback? = null
 
     companion object {
         private const val TASK_ARG = "task_arg"
+        private const val TASK_POS = "task_pos"
 
-        fun newInstance(taskMessage: String? = null) = NewTaskDialog().apply {
-            arguments = bundleOf(TASK_ARG to taskMessage)
+        fun newInstance(task: Task? = null, position: Int = -1) = NewTaskTodoDialog().apply {
+            arguments = bundleOf(TASK_ARG to task, TASK_POS to position)
         }
     }
 
@@ -33,7 +34,8 @@ class NewTaskDialog : BaseBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            it.takeIf { it.containsKey(TASK_ARG) }?.getString(TASK_ARG)?.let { tvTask.setText(it) }
+            it.takeIf { it.containsKey(TASK_ARG) }?.getParcelable<Task>(TASK_ARG)?.let { tvTask.setText(it.message) }
+            it.takeIf { it.containsKey(TASK_POS) }?.getInt(TASK_POS)?.let { Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show() }
         }
         listener = targetFragment as? OpenImportCallback
         tvTask.requestFocus()
