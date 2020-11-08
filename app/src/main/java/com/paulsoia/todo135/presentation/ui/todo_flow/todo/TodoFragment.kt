@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
@@ -31,8 +32,6 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
     private val adapter = TodoDayAdapter()
     private var positionClicked: Int = -1
 
-    private var items = listOf<Task>()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initLoader()
@@ -44,12 +43,19 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
         getTasks()
         openImport()
         updateList()
+        updateTasks()
     }
 
     private fun initRecyclerView() {
         adapter.callback = this
         rvTodoDay.layoutManager = LinearLayoutManager(requireContext())
         rvTodoDay.adapter = adapter
+    }
+
+    private fun updateTasks() {
+        viewModel.resultSaveTask.observe(viewLifecycleOwner, {
+            if (it) { viewModel.getTaskWithDate() }
+        })
     }
 
     private fun setupTabs() {
@@ -61,6 +67,7 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val currentTab = tab?.position
                 getTasks(currentTab ?: 1)
+                tvToday.text = getDate(tab?.position ?: 1, true)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -111,11 +118,7 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
 
     override fun onEmptyItemClick(position: Int) {
         positionClicked = position
-        fragmentManager?.let {
-            NewTaskTodoDialog.newInstance().apply {
-                setTargetFragment(this@TodoFragment, 2)
-            }.show(it, "create")
-        }
+        viewModel.getAllTasks()
     }
 
     private fun openImport() {
@@ -137,28 +140,35 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
     }
 
     override fun closeImportDialog(task: Task) {
-        fragmentManager?.let {
+        //save task from import
+        val level = when (positionClicked) {
+            1 -> LevelType.BIG
+            in 3..5 -> LevelType.MEDIUM
+            in 7..11 -> LevelType.SMALL
+            else -> LevelType.NONE
+        }
+        val date = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        when (tabs.selectedTabPosition) {
+            0 -> date.add(Calendar.DATE, -1)
+            1 -> date.add(Calendar.DATE, 0)
+            2 -> date.add(Calendar.DATE, +1)
+            else -> date.add(Calendar.DATE, -100)
+        }
+        //date.add(Calendar.DATE, tabs.selectedTabPosition + 1)
+        val unixtime = date.time.time.div(1000)
+        val itemCopy = task.copy(id = null, date = unixtime.toInt(), level = level)
+        viewModel.saveTodoTask(itemCopy)
+
+        /*fragmentManager?.let {
             NewTaskTodoDialog.newInstance(task, positionClicked).apply {
                 setTargetFragment(this@TodoFragment, 2)
             }.show(it, "create")
-        }
-        /*run {
-            val date = Calendar.getInstance()
-            val unixtime = date.time.time.div(1000)
-            task.date = unixtime.toInt()
-            task.level = when(positionClicked) {
-                1 -> LevelType.BIG
-                3, 4, 5 -> LevelType.MEDIUM
-                7, 8, 9, 10, 11 -> LevelType.SMALL
-                else -> throw IllegalArgumentException("Wrong index in ImportAdapter")
-            }
-        }.also { viewModel.updateTask(task) }*/
+        }*/
     }
 
     private fun updateList() {
-        viewModel.resultSaveTask.observe(viewLifecycleOwner, {
-            if (it) { viewModel.getTaskWithDate() }
-        })
+
     }
 
 }

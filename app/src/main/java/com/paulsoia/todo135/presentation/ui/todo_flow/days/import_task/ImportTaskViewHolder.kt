@@ -17,11 +17,12 @@ class ImportTaskViewHolder(view: View) : BaseViewHolder<Task>(view) {
 
     override fun bind(item: Task) {
         with(itemView) {
-            setOnClickListener { callbackItem?.invoke(item) }
+            setOnClickListener {
+                callbackItem?.invoke(item)
+            }
             tvTitle.text = item.message
             checkbox.isVisible = false
             ivPush.isVisible = false
-
         }
     }
 
