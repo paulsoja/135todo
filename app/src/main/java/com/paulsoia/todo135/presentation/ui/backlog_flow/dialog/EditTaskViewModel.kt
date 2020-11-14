@@ -3,16 +3,20 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.dialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
 import com.paulsoia.todo135.business.interactor.UpdateTodoTaskByIdUseCase
+import com.paulsoia.todo135.business.model.ScreenType
 import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber
 
 class EditTaskViewModel(
-    private val updateTaskByIdUseCase: UpdateTodoTaskByIdUseCase
+    private val updateTaskByIdUseCase: UpdateTaskByIdUseCase,
+    private val updateTodoTaskByIdUseCase: UpdateTodoTaskByIdUseCase
 ) : ViewModel() {
 
     internal val message = MutableLiveData<Task>()
+    internal var screenType: ScreenType? = null
 
     internal val isViewLoading = MutableLiveData<Boolean>()
     internal val warningResult = MutableLiveData<String>()
@@ -21,20 +25,37 @@ class EditTaskViewModel(
         val updateTaskResult = MutableLiveData<Boolean>()
         when {
             task.message.isEmpty() -> {}
-            task.level == LevelType.NONE -> {}
+            //task.level == LevelType.NONE -> {}
             else -> {
                 isViewLoading.value = true
                 warningResult.value = ""
-                updateTaskByIdUseCase(UpdateTodoTaskByIdUseCase.Params(task)) {
-                    it.onSuccess {
-                        updateTaskResult.value = true
-                    }.onFailure {
-                        warningResult.value = it.message
-                        updateTaskResult.value = false
-                        Timber.w("updateTaskByIdUseCase: ${it.message}")
+                when(screenType) {
+                    ScreenType.TODO_SCREEN -> {
+                        updateTodoTaskByIdUseCase(UpdateTodoTaskByIdUseCase.Params(task)) {
+                            it.onSuccess {
+                                updateTaskResult.value = true
+                            }.onFailure {
+                                warningResult.value = it.message
+                                updateTaskResult.value = false
+                                Timber.w("updateTaskByIdUseCase: ${it.message}")
+                            }
+                            isViewLoading.value = false
+                        }
                     }
-                    isViewLoading.value = false
+                    ScreenType.BACKLOG_SCREEN -> {
+                        updateTaskByIdUseCase(UpdateTaskByIdUseCase.Params(task)) {
+                            it.onSuccess {
+                                updateTaskResult.value = true
+                            }.onFailure {
+                                warningResult.value = it.message
+                                updateTaskResult.value = false
+                                Timber.w("updateTaskByIdUseCase: ${it.message}")
+                            }
+                            isViewLoading.value = false
+                        }
+                    }
                 }
+
             }
         }
         return updateTaskResult

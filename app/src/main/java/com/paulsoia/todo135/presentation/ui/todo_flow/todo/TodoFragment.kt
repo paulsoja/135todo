@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.ScreenType
 import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
@@ -111,7 +112,7 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener,
 
     override fun onItemClick(task: Task) {
         fragmentManager?.let {
-            EditTaskDialog.newInstance(task).apply {
+            EditTaskDialog.newInstance(task, ScreenType.TODO_SCREEN).apply {
                 setTargetFragment(this@TodoFragment, 1)
             }.show(it, "edit")
         }

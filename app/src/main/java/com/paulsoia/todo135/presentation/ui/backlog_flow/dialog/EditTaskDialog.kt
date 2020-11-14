@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.ScreenType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_edit_task.*
@@ -16,9 +17,10 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
 
     companion object {
         private const val TASK_ARG = "task"
+        private const val SCREEN = "screen"
 
-        fun newInstance(task: Task) = EditTaskDialog().apply {
-            arguments = bundleOf(TASK_ARG to task)
+        fun newInstance(task: Task, screen: ScreenType) = EditTaskDialog().apply {
+            arguments = bundleOf(TASK_ARG to task, SCREEN to screen)
         }
     }
 
@@ -29,6 +31,8 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
         etMessage.requestFocus()
         arguments?.let {
             viewModel.message.value = it.takeIf { it.containsKey(TASK_ARG) }?.getParcelable(TASK_ARG)
+                ?: throw IllegalArgumentException("`${Task::class.java.simpleName}` required")
+            viewModel.screenType = it.takeIf { it.containsKey(SCREEN) }?.getParcelable(SCREEN)
                 ?: throw IllegalArgumentException("`${Task::class.java.simpleName}` required")
         }
         initViews()
@@ -45,7 +49,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
             task?.message = message
             task?.let { tsk ->
                 viewModel.tryUpdateTask(tsk).observe(viewLifecycleOwner, {
-                    if (it) { getUpdateCallback()?.onUpdateTask(tsk) }
+                    if (it) { getUpdateCallback()?.onUpdateTask(tsk).also { dismiss() } }
                 })
             }
         }

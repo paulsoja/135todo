@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.R
+import com.paulsoia.todo135.business.model.ScreenType
 import com.paulsoia.todo135.business.model.task.FilterType
 import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.SortType
@@ -98,9 +99,11 @@ class BacklogFragment : BaseFragment(), BacklogTaskAdapter.TaskListener, UpdateB
     }
 
     override fun onTaskClicked(task: Task) {
-        EditTaskDialog.newInstance(task).apply {
-            setTargetFragment(this@BacklogFragment, 0)
-        }.show(parentFragmentManager, "edit")
+        fragmentManager?.let {
+            EditTaskDialog.newInstance(task, ScreenType.BACKLOG_SCREEN).apply {
+                setTargetFragment(this@BacklogFragment, 0)
+            }.show(it, "edit")
+        }
     }
 
     override fun onMenuClicked(task: Task, position: Int, v: View) {
