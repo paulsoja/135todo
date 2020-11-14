@@ -8,6 +8,7 @@ import com.paulsoia.todo135.business.model.task.TaskMarker
 
 class TodoViewModel(
     private val updateTaskByIdUseCase: UpdateTaskByIdUseCase,
+    private val updateTodoTaskByIdUseCase: UpdateTodoTaskByIdUseCase,
     private val saveTaskUseCase: SaveTaskUseCase,
     private val getTasksWithDateUseCase: GetTasksWithDateUseCase,
     private val getAllTasksUseCase: GetAllTasksUseCase,
@@ -25,12 +26,12 @@ class TodoViewModel(
         isViewLoading.value = true
         saveTaskUseCase(SaveTaskUseCase.Params(task)) {
             it.onSuccess {
-                resultSaveTask.value = true
+                resultSaveTask.postValue(true)
             }.onFailure {
-                resultSaveTask.value = false
-                warningResult.value = it.message
+                resultSaveTask.postValue(false)
+                warningResult.postValue(it.message)
             }
-            isViewLoading.value = false
+            isViewLoading.postValue(false)
         }
     }
 
@@ -70,7 +71,7 @@ class TodoViewModel(
     }
 
     internal fun updateTask(task: Task) {
-        updateTaskByIdUseCase(UpdateTaskByIdUseCase.Params(task)) {
+        updateTodoTaskByIdUseCase(UpdateTodoTaskByIdUseCase.Params(task)) {
             it.onSuccess {
                 resultUpdate.value = true
             }.onFailure {

@@ -10,6 +10,7 @@ import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
+import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.NewTaskTodoDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.import_task.ImportDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.TodoDayAdapter
@@ -19,8 +20,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDialog.OpenImportCallback,
-    ImportDialog.GetTaskAndCloseListener {
+class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener,
+    ImportDialog.GetTaskAndCloseListener, UpdateBacklogCallback {
 
     companion object {
         fun newInstance() = TodoFragment()
@@ -131,14 +132,6 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
         })
     }
 
-    override fun onImportClicked() {
-        viewModel.getAllTasks()
-    }
-
-    override fun onUpdateTask(task: Task?) {
-
-    }
-
     override fun closeImportDialog(task: Task) {
         //save task from import
         val level = when (positionClicked) {
@@ -169,6 +162,10 @@ class TodoFragment : BaseFragment(), TodoDayAdapter.TaskListener, NewTaskTodoDia
 
     private fun updateList() {
 
+    }
+
+    override fun onUpdateTask(task: Task?) {
+        viewModel.getTaskWithDate()
     }
 
 }

@@ -16,4 +16,5 @@ val useCasesModule = module {
     factory { GetTaskByIdUseCase(get()) }
     factory { GetStatsByDatesUseCase(get()) }
     factory { SaveTodoTaskUseCase(get()) }
+    factory { UpdateTodoTaskByIdUseCase(get()) }
 }

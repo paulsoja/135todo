@@ -28,6 +28,7 @@ class ListViewHolder(view: View) : BaseViewHolder<Task>(view) {
             }
             tvTask.text = item.message
             item.id?.let {
+                checkbox.isEnabled = true
                 setOnClickListener { callbackItem?.invoke(item) }
                 checkbox.setOnClickListener {
                     callbackCheckbox?.invoke(item.also {

@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/default_margin"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/etMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:autofillHints="no"
+        android:inputType="textLongMessage"
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:maxLength="255"
+        android:maxLines="5"
         app:layout_constraintTop_toTopOf="parent"
-        android:inputType="textLongMessage" />
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/btnEdit"
         android:layout_width="match_parent"
-        android:text="@string/dialog_edit_task"
-        app:layout_constraintTop_toBottomOf="@+id/etMessage"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
-        android:id="@+id/llButtons"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/btnEdit">
+        android:background="@drawable/bg_btn_ripple"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:text="@string/dialog_edit_task"
+        app:layout_constraintTop_toBottomOf="@+id/etMessage" />
 
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="0dp"
-            android:text="@string/dialog_delete_task"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btnComplete"
-            android:layout_width="0dp"
-            android:text="@string/dialog_done_task"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_btn_ripple"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        app:layout_constraintTop_toBottomOf="@+id/btnEdit"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/dialog_delete_task" />
 
     <ProgressBar
         android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,8 +42,8 @@ class GetTasksWithDateUseCase(
         calYesterday.add(Calendar.DATE, -1)
         val yesterdayDate = calYesterday.time.time.div(1000).getDateTime()
 
-        calTomorrow.add(Calendar.DATE, -1)
-        val tomorrowDate = calYesterday.time.time.div(1000).getDateTime()
+        calTomorrow.add(Calendar.DATE, +1)
+        val tomorrowDate = calTomorrow.time.time.div(1000).getDateTime()
 
         items.forEach {
             when(it.date.toLong().getDateTime()) {

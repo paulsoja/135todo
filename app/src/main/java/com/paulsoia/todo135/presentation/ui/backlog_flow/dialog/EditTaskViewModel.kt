@@ -3,13 +3,13 @@ package com.paulsoia.todo135.presentation.ui.backlog_flow.dialog
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.paulsoia.todo135.business.interactor.UpdateTaskByIdUseCase
+import com.paulsoia.todo135.business.interactor.UpdateTodoTaskByIdUseCase
 import com.paulsoia.todo135.business.model.task.LevelType
 import com.paulsoia.todo135.business.model.task.Task
 import timber.log.Timber
 
 class EditTaskViewModel(
-    private val updateTaskByIdUseCase: UpdateTaskByIdUseCase
+    private val updateTaskByIdUseCase: UpdateTodoTaskByIdUseCase
 ) : ViewModel() {
 
     internal val message = MutableLiveData<Task>()
@@ -25,7 +25,7 @@ class EditTaskViewModel(
             else -> {
                 isViewLoading.value = true
                 warningResult.value = ""
-                updateTaskByIdUseCase(UpdateTaskByIdUseCase.Params(task)) {
+                updateTaskByIdUseCase(UpdateTodoTaskByIdUseCase.Params(task)) {
                     it.onSuccess {
                         updateTaskResult.value = true
                     }.onFailure {

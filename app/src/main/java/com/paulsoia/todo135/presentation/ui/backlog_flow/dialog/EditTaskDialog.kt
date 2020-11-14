@@ -37,6 +37,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
     private fun initViews() {
         viewModel.message.observe(viewLifecycleOwner, {
             etMessage.setText(it.message)
+            etMessage.setSelection(etMessage.length())
         })
         btnEdit.setOnClickListener {
             val message = etMessage.text.toString()
