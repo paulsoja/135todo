@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/default_double_margin"
+    android:paddingBottom="@dimen/default_double_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="version 1.0.0" />
+
+    <TextView
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="if you have any questions or proposals:" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sojasoft2015@gmail.com"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
