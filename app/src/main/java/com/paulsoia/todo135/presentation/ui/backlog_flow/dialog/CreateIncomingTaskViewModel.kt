@@ -15,19 +15,17 @@ class CreateIncomingTaskViewModel(
 
     internal val isViewLoading = MutableLiveData<Boolean>()
     internal val warningResult = MutableLiveData<String>()
+    internal val saveTaskResult = MutableLiveData<Boolean>()
 
-    internal fun trySaveTask(task: Task): LiveData<Boolean> {
-        val saveTaskResult = MutableLiveData<Boolean>()
+    internal fun trySaveTask(task: Task) {
         when {
             task.message.isEmpty() -> {}
             else -> {
                 isViewLoading.value = true
-                warningResult.value = ""
                 saveTaskUseCase(SaveTaskUseCase.Params(task)) {
                     it.onSuccess {
                         saveTaskResult.value = true
                     }.onFailure {
-                        isViewLoading.value = false
                         warningResult.value = it.message
                         saveTaskResult.value = false
                         Timber.w("saveTaskUseCase: ${it.message}")
@@ -36,7 +34,6 @@ class CreateIncomingTaskViewModel(
                 }
             }
         }
-        return saveTaskResult
     }
 
 }

@@ -35,7 +35,7 @@ class NewTaskTodoDialog : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             it.takeIf { it.containsKey(TASK_ARG) }?.getParcelable<Task>(TASK_ARG)?.let { tvTask.setText(it.message) }
-            it.takeIf { it.containsKey(TASK_POS) }?.getInt(TASK_POS)?.let { Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show() }
+            it.takeIf { it.containsKey(TASK_POS) }?.getInt(TASK_POS)
         }
         listener = targetFragment as? OpenImportCallback
         tvTask.requestFocus()
@@ -83,10 +83,6 @@ class NewTaskTodoDialog : BaseBottomSheetDialogFragment() {
             loader.isVisible = it
         })
     }
-
-    //private fun getUpdateCallback(): UpdateBacklogCallback? = targetFragment as? UpdateBacklogCallback
-
-    private fun getImportCallback(): OpenImportCallback? = parentFragment as? OpenImportCallback
 
     interface OpenImportCallback {
         fun onImportClicked()

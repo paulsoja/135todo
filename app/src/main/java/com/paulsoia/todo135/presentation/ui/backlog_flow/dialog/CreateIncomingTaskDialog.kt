@@ -33,11 +33,12 @@ class CreateIncomingTaskDialog : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             it.takeIf { it.containsKey(TASK_ARG) }?.getParcelable<Task>(TASK_ARG)?.let { tvTask.setText(it.message) }
-            it.takeIf { it.containsKey(TASK_POS) }?.getInt(TASK_POS)?.let { Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show() }
+            it.takeIf { it.containsKey(TASK_POS) }?.getInt(TASK_POS)
         }
         tvTask.requestFocus()
         initLoader()
         warning()
+        updateBacklog()
         tvCreate.setOnClickListener { saveTask() }
         tvImport.setOnClickListener { openImportDialog() }
     }
@@ -47,12 +48,7 @@ class CreateIncomingTaskDialog : BaseBottomSheetDialogFragment() {
     }
 
     private fun saveTask() {
-        viewModel.trySaveTask(getTaskModel()).observe(viewLifecycleOwner, {
-            if (it) {
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val date = sdf.format(System.currentTimeMillis())
-            }
-        })
+        viewModel.trySaveTask(getTaskModel())
     }
 
     private fun warning() {
@@ -73,10 +69,18 @@ class CreateIncomingTaskDialog : BaseBottomSheetDialogFragment() {
         return task
     }
 
+    private fun updateBacklog() {
+        viewModel.saveTaskResult.observe(viewLifecycleOwner, {
+            getUpdateCallback()?.onUpdateTask().also { dismiss() }
+        })
+    }
+
     private fun initLoader() {
         viewModel.isViewLoading.observe(viewLifecycleOwner, {
             loader.isVisible = it
         })
     }
+
+    private fun getUpdateCallback(): UpdateBacklogCallback? = targetFragment as? UpdateBacklogCallback
 
 }

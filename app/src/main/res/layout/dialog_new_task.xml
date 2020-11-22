@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         android:layout_margin="4dp"
         android:gravity="center"
         android:padding="8dp"
@@ -22,10 +23,16 @@
     <EditText
         android:id="@+id/tvTask"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         app:layout_constraintTop_toBottomOf="@+id/tvImport"
+        android:maxLength="255"
+        android:maxLines="5"
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
         android:autofillHints="new task"
         android:hint="@string/todo_new_task"
+        tools:ignore="LabelFor"
         android:inputType="textLongMessage" />
 
     <LinearLayout
@@ -74,11 +81,14 @@
 
     <TextView
         android:id="@+id/tvCreate"
-        android:background="@color/grey_light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/llLevel"
-        android:layout_margin="4dp"
+        android:background="@drawable/bg_btn_ripple"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/default_half_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
         android:gravity="center"
         android:padding="8dp"
         android:text="@string/text_create" />

@@ -36,6 +36,7 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
                 ?: throw IllegalArgumentException("`${Task::class.java.simpleName}` required")
         }
         initViews()
+        deleteTaskResult()
     }
 
     private fun initViews() {
@@ -53,6 +54,18 @@ class EditTaskDialog : BaseBottomSheetDialogFragment() {
                 })
             }
         }
+        btnDelete.setOnClickListener {
+            val task = viewModel.message.value
+            task?.let {
+                viewModel.deleteTask(it)
+            }
+        }
+    }
+
+    private fun deleteTaskResult() {
+        viewModel.deleteTaskResult.observe(viewLifecycleOwner, {
+            if (it) { getUpdateCallback()?.onUpdateTask().also { dismiss() } }
+        })
     }
 
     private fun getUpdateCallback(): UpdateBacklogCallback? = targetFragment as? UpdateBacklogCallback

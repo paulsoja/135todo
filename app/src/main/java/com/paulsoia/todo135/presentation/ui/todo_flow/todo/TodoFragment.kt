@@ -12,7 +12,6 @@ import com.paulsoia.todo135.business.model.task.Task
 import com.paulsoia.todo135.presentation.base.BaseFragment
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.EditTaskDialog
 import com.paulsoia.todo135.presentation.ui.backlog_flow.dialog.UpdateBacklogCallback
-import com.paulsoia.todo135.presentation.ui.todo_flow.days.NewTaskTodoDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.import_task.ImportDialog
 import com.paulsoia.todo135.presentation.ui.todo_flow.days.items.TodoDayAdapter
 import kotlinx.android.synthetic.main.fragment_todo.*
