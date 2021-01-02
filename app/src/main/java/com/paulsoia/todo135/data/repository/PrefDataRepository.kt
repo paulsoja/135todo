@@ -19,37 +19,17 @@ class PrefDataRepository(
         const val SETTINGS_NAME = "settings_name"
     }
 
-    override fun setHowToFilterTask(type: FilterType) {
-        pref.edit { putString(FILTER_TYPE, type.type) }
-    }
+    override fun setHowToFilterTask(type: FilterType) = pref.edit { putString(FILTER_TYPE, type.type) }
+    override fun getHowToFilterTask(): FilterType? = getEnumTypeValue<FilterType>(pref.getString(FILTER_TYPE, FilterType.ALL.type) ?: FilterType.ALL.type)
 
-    override fun getHowToFilterTask(): FilterType? {
-        return getEnumTypeValue<FilterType>(pref.getString(FILTER_TYPE, FilterType.ALL.type) ?: FilterType.ALL.type)
-    }
+    override fun setHowToSortTask(type: SortType) = pref.edit { putString(SORT_TYPE, type.type) }
+    override fun getHowToSortTask(): SortType? = getEnumTypeValue<SortType>(pref.getString(SORT_TYPE, SortType.RESET.type) ?: SortType.RESET.type)
 
-    override fun setHowToSortTask(type: SortType) {
-        pref.edit { putString(SORT_TYPE, type.type) }
-    }
+    override fun setStatsRange(type: DateRangeType) = pref.edit { putString(STATS_TYPE, type.type) }
+    override fun getStatsRange(): DateRangeType? = getEnumTypeValue<DateRangeType>(pref.getString(STATS_TYPE, DateRangeType.DAY.type) ?: DateRangeType.DAY.type)
 
-    override fun getHowToSortTask(): SortType? {
-        return getEnumTypeValue<SortType>(pref.getString(SORT_TYPE, SortType.RESET.type) ?: SortType.RESET.type)
-    }
-
-    override fun setStatsRange(type: DateRangeType) {
-        pref.edit { putString(STATS_TYPE, type.type) }
-    }
-
-    override fun getStatsRange(): DateRangeType? {
-        return getEnumTypeValue<DateRangeType>(pref.getString(STATS_TYPE, DateRangeType.DAY.type) ?: DateRangeType.DAY.type)
-    }
-
-    override fun saveName(name: String) {
-        pref.edit { putString(SETTINGS_NAME, name) }
-    }
-
-    override fun getName(): String? {
-        return pref.getString(SETTINGS_NAME, "")
-    }
+    override fun saveName(name: String) = pref.edit { putString(SETTINGS_NAME, name) }
+    override fun getName(): String? = pref.getString(SETTINGS_NAME, "")
 
     override fun clear() = pref.edit().clear().apply()
 

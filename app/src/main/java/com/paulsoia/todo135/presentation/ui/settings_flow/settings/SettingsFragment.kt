@@ -21,7 +21,7 @@ class SettingsFragment : BaseFragment() {
 
     override val layoutRes = R.layout.fragment_settings
 
-    val prefRepository: PrefRepository by inject()
+    private val prefRepository: PrefRepository by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

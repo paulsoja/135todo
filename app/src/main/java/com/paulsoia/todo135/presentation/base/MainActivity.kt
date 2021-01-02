@@ -74,8 +74,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         overridePendingTransition(0, 0)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onResumeFragments() {
+        super.onResumeFragments()
         App.instance.navigatorHolder.setNavigator(navigator)
     }
 

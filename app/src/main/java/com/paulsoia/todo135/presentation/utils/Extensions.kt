@@ -1,6 +1,5 @@
 package com.paulsoia.todo135.presentation.utils
 
-import android.text.format.DateFormat
 import android.text.format.DateFormat.format
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import ru.terrakok.cicerone.commands.BackTo
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
 import ru.terrakok.cicerone.commands.Replace
-import java.text.SimpleDateFormat
 import java.util.*
 
 inline fun <reified T : Enum<T>> getEnumTypeValue(type: String): T? {
